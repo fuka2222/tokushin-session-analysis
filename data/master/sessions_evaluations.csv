@@ -1,0 +1,2 @@
+﻿student_id,mg_name,session_number,session_date,sp_start_date,days_from_sp_start,evaluated_at,evaluation_method,structure_adherence_rate,script_delivery_likelihood,missing_blocks,partial_blocks,structure_comment,transcript_source,result_json_path
+ルカ,小針,1,2026-04-28,,14,2026-05-26T00:00:00Z,manual_review,0.868,high,,"A1,A7,B1,B3,C2,C3,D5,D6,E1",虎の巻の必須パートはおおむね伝わっており、パート丸ごとの欠落はない。一方で進行順が型と異なり（コーチング・ルールを自己紹介より先に実施）、顔出し環境依頼・質と量の整理・日報締切時刻などは薄い。,user_pasted_transcript,data/results/ルカ_1_manual.json

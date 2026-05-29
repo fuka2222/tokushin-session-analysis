@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>新特進 セッション分析</title>
+  <style>
+    :root {
+      --bg: #f4f5f7;
+      --surface: #fff;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #6b7280;
+      --blue: #2563eb;
+      --blue-light: #dbeafe;
+      --green: #059669;
+      --green-bg: #d1fae5;
+      --yellow-bg: #fef3c7;
+      --yellow-text: #b45309;
+      --orange: #ea580c;
+      --orange-bg: #ffedd5;
+      --red: #dc2626;
+      --gray-bar: #e5e7eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    /* Header */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      height: 52px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .brand .badge {
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .nav { display: flex; gap: 1rem; }
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      padding: 0.25rem 0;
+    }
+    .nav a.active { color: var(--blue); font-weight: 600; border-bottom: 2px solid var(--blue); }
+    .topbar-right { margin-left: auto; font-size: 0.75rem; color: var(--muted); }
+
+    /* Toolbar */
+    .toolbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .toolbar input, .toolbar select {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.4rem 0.65rem;
+      font-size: 0.85rem;
+      background: #fff;
+    }
+    .toolbar input[type=search] { min-width: 200px; }
+    .stat-pills { display: flex; gap: 0.5rem; margin-left: auto; flex-wrap: wrap; }
+    .pill {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
+    }
+    .pill strong { color: var(--blue); }
+
+    .student-row.attention { border-left: 3px solid var(--red); }
+    .fp-done { background: var(--green-bg); color: var(--green); }
+    .fp-risk { background: var(--orange-bg); color: var(--orange); }
+    .fp-overdue { background: #fee2e2; color: var(--red); }
+    .quad-green { background: var(--green-bg); color: var(--green); }
+    .quad-red { background: #fee2e2; color: var(--red); }
+    .quad-blue { background: var(--blue-light); color: var(--blue); }
+    .quad-orange { background: var(--orange-bg); color: var(--orange); }
+    .quad-gray { background: var(--bg); color: var(--muted); }
+    .grid-badge {
+      font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.4rem;
+      border-radius: 4px; background: #ede9fe; color: #5b21b6; text-align: center;
+    }
+    .flag-list { display: flex; flex-wrap: wrap; gap: 0.2rem; }
+    .flag-chip {
+      font-size: 0.6rem; padding: 0.1rem 0.35rem; border-radius: 3px;
+      background: #fee2e2; color: var(--red); font-weight: 600;
+    }
+    .insight-col { font-size: 0.72rem; line-height: 1.35; }
+    .hypothesis-list { margin: 0.35rem 0 0; padding-left: 1.1rem; font-size: 0.78rem; color: #374151; }
+    .mg-notes-box {
+      background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px;
+      padding: 0.65rem; font-size: 0.82rem; margin-top: 0.5rem;
+    }
+    .attr-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.35rem;
+      font-size: 0.75rem; margin-top: 0.35rem;
+    }
+    .attr-item { background: #f3f4f6; padding: 0.35rem 0.5rem; border-radius: 4px; }
+    .attr-item span { color: var(--muted); font-size: 0.65rem; display: block; }
+
+    /* List header */
+    .list-header {
+      display: grid;
+      grid-template-columns: 28px 190px minmax(200px,1fr) 96px 108px 76px 88px 52px;
+      gap: 0.5rem;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    /* Student row */
+    .student-row {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 28px 190px minmax(200px,1fr) 96px 108px 76px 88px 52px;
+      gap: 0.5rem;
+      padding: 0.85rem 1.25rem;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .student-row:hover { background: #f9fafb; }
+    .student-row.expanded { background: #f0f7ff; }
+
+    .student-row input[type=checkbox] { margin: 0; }
+
+    .identity .name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+    .identity .sub {
+      color: var(--muted);
+      font-size: 0.75rem;
+      word-break: break-all;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.35rem; }
+    .tag {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .tag.class { background: var(--green-bg); color: var(--green); }
+    .tag.mg { background: var(--yellow-bg); color: var(--yellow-text); }
+    .tag.genre { background: var(--blue-light); color: var(--blue); }
+
+    /* Session slots */
+    .sessions-track {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      align-items: flex-end;
+    }
+    .slot {
+      min-width: 72px;
+      max-width: 88px;
+    }
+    .slot .slot-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .slot .bar-wrap {
+      height: 6px;
+      background: var(--gray-bar);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 0.15rem;
+    }
+    .slot .bar {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.2s;
+    }
+    .slot .bar.empty { width: 0 !important; }
+    .slot .bar.scheduled { background: #9ca3af; width: 30% !important; }
+    .slot .bar.done { background: #93c5fd; width: 100% !important; }
+    .slot .bar.analyzed-high { background: var(--green); }
+    .slot .bar.analyzed-medium { background: var(--orange); }
+    .slot .bar.analyzed-low { background: var(--red); }
+    .slot .slot-meta {
+      font-size: 0.62rem;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+    .slot .slot-pct {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Overall column */
+    .overall .label { font-size: 0.65rem; color: var(--muted); }
+    .overall .count { font-size: 0.8rem; font-weight: 600; margin: 0.15rem 0; }
+    .overall .bar-wrap {
+      height: 8px;
+      background: var(--gray-bar);
+      border-radius: 4px;
+      overflow: hidden;
+      width: 100%;
+    }
+    .overall .bar { height: 100%; background: var(--orange); border-radius: 4px; }
+    .overall .pct { font-size: 0.75rem; font-weight: 700; color: var(--orange); margin-top: 0.2rem; }
+
+    /* Meta column */
+    .meta-col { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+    .meta-col .sp-days { color: var(--orange); font-weight: 700; font-size: 0.85rem; }
+
+    /* Status */
+    .status-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      background: var(--green-bg);
+      color: var(--green);
+      text-align: center;
+      width: 100%;
+    }
+    .status-badge.pending { background: var(--bg); color: var(--muted); }
+    .status-badge.partial { background: var(--yellow-bg); color: var(--yellow-text); }
+
+    .btn-detail {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 6px;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn-detail:hover { border-color: var(--blue); color: var(--blue); }
+
+    /* Detail panel */
+    .detail-panel {
+      background: #fafbfc;
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.25rem 1rem 3.5rem;
+      display: none;
+    }
+    .detail-panel.open { display: block; }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 800px) { .detail-grid { grid-template-columns: 1fr; } }
+    .detail-box h4 {
+      margin: 0 0 0.5rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .blocks { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+    .block-chip {
+      font-size: 0.68rem;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+    .block-chip.covered { border-color: var(--green); color: var(--green); }
+    .block-chip.partial { border-color: var(--orange); color: var(--orange); }
+    .block-chip.missing { border-color: var(--red); color: var(--red); }
+    .hearing-list { font-size: 0.8rem; }
+    .hearing-list dt { color: var(--muted); font-size: 0.7rem; margin-top: 0.35rem; }
+    .hearing-list dd { margin: 0.1rem 0 0; }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1100px) {
+      .list-header, .student-row {
+        grid-template-columns: 28px 1fr;
+      }
+      .list-header > *:not(:first-child):not(:nth-child(2)),
+      .student-row > *:not(:first-child):not(:nth-child(2)) {
+        grid-column: 2;
+      }
+      .sessions-track { margin-top: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      新特進 <span class="badge">分析</span>
+    </div>
+    <nav class="nav">
+      <a href="#" class="active">生徒一覧</a>
+      <a href="#" id="nav-mg">MG別</a>
+    </nav>
+    <div class="topbar-right" id="updated-at">—</div>
+  </header>
+
+  <div class="toolbar">
+    <input type="search" id="q" placeholder="生徒名・IDで検索" />
+    <select id="filter-mg"><option value="">担当MG（すべて）</option></select>
+    <select id="filter-class"><option value="">クラス（すべて）</option></select>
+    <select id="filter-eval">
+      <option value="">分析状況（すべて）</option>
+      <option value="yes">分析済みあり</option>
+      <option value="no">未分析のみ</option>
+    </select>
+    <select id="filter-attention">
+      <option value="">注力（すべて）</option>
+      <option value="yes">要注力のみ</option>
+    </select>
+    <select id="filter-quadrant">
+      <option value="">時間×進捗（すべて）</option>
+      <option value="high_low">時間多×進捗少</option>
+      <option value="high_high">時間多×進捗多</option>
+      <option value="low_low">時間少×進捗少</option>
+    </select>
+    <div class="stat-pills" id="stat-pills"></div>
+  </div>
+
+  <div class="list-header">
+    <span></span>
+    <span>生徒</span>
+    <span>伴走セッション（1〜9回目）</span>
+    <span>初投稿30日</span>
+    <span>可処分×進捗</span>
+    <span>9マス</span>
+    <span>注力</span>
+    <span></span>
+  </div>
+
+  <div id="list"></div>
+
+  <script>
+    let DATA = null;
+    let expandedId = null;
+
+    const pct = (n) => n == null ? "—" : Math.round(n * 100) + "%";
+
+    function fmtDate(d) {
+      if (!d) return "";
+      const p = d.split("-");
+      if (p.length === 3) return `${p[1]}/${p[2]}`;
+      return d;
+    }
+
+    function spDays(student) {
+      if (!student.sp_start_date || !student.first_session_date) return null;
+      try {
+        const a = new Date(student.sp_start_date);
+        const b = new Date(student.first_session_date);
+        return Math.round((b - a) / 86400000);
+      } catch { return null; }
+    }
+
+    function barClass(slot) {
+      if (slot.has_evaluation && slot.adherence != null) {
+        const lik = slot.likelihood;
+        if (lik === "high") return "analyzed-high";
+        if (lik === "low") return "analyzed-low";
+        return "analyzed-medium";
+      }
+      if (slot.status === "done") return "done";
+      if (slot.status === "scheduled") return "scheduled";
+      return "empty";
+    }
+
+    function barWidth(slot) {
+      if (slot.has_evaluation && slot.adherence != null)
+        return Math.round(slot.adherence * 100) + "%";
+      if (slot.status === "done" || slot.status === "scheduled") return "100%";
+      return "0%";
+    }
+
+    function filterStudents() {
+      const q = document.getElementById("q").value.trim().toLowerCase();
+      const mg = document.getElementById("filter-mg").value;
+      const cls = document.getElementById("filter-class").value;
+      const ev = document.getElementById("filter-eval").value;
+      const att = document.getElementById("filter-attention").value;
+      const quad = document.getElementById("filter-quadrant").value;
+      return DATA.students.filter((s) => {
+        if (mg && s.mg_name !== mg) return false;
+        if (cls && s.class_name !== cls) return false;
+        if (ev === "yes" && s.evaluated_count === 0) return false;
+        if (ev === "no" && s.evaluated_count > 0) return false;
+        if (att === "yes" && !s.needs_attention) return false;
+        if (quad && (s.time_quadrant || {}).key !== quad) return false;
+        if (q) {
+          const hay = (s.student_name + " " + s.user_id).toLowerCase();
+          if (!hay.includes(q)) return false;
+        }
+        return true;
+      });
+    }
+
+    function fpBadge(fp) {
+      if (!fp) return '<span class="status-badge pending">—</span>';
+      const cls = { done: "fp-done", at_risk: "fp-risk", overdue: "fp-overdue", in_progress: "pending" }[fp.status] || "pending";
+      return `<span class="status-badge ${cls}" style="width:100%">${escapeHtml(fp.label)}</span>`;
+    }
+
+    function quadBadge(tq) {
+      if (!tq || !tq.key) return '<span class="status-badge pending">未入力</span>';
+      const cls = { high_high: "quad-green", high_low: "quad-red", low_high: "quad-blue", low_low: "quad-orange" }[tq.key] || "quad-gray";
+      let extra = "";
+      if (tq.unused_ratio != null) extra = `<div style="font-size:0.62rem;color:var(--muted)">未使用${Math.round(tq.unused_ratio*100)}%</div>`;
+      return `<div class="insight-col"><span class="status-badge ${cls}" style="width:100%">${escapeHtml(tq.label)}</span>${extra}</div>`;
+    }
+
+    function gridBadge(ng) {
+      if (!ng) return '<span class="status-badge pending">未設定</span>';
+      return `<span class="grid-badge" title="${escapeHtml(ng.focus)}">${escapeHtml(ng.short)}</span>`;
+    }
+
+    function flagList(flags) {
+      if (!flags || !flags.length) return '<span style="color:var(--muted);font-size:0.7rem">—</span>';
+      return '<div class="flag-list">' + flags.map(f => `<span class="flag-chip">${escapeHtml(f)}</span>`).join("") + '</div>';
+    }
+
+    function renderSlots(slots) {
+      const show = slots.slice(0, 9);
+      return show.map((slot) => {
+        const bc = barClass(slot);
+        const w = barWidth(slot);
+        const pctText = slot.has_evaluation && slot.adherence != null
+          ? `<span class="slot-pct">${pct(slot.adherence)}</span>`
+          : (slot.date ? fmtDate(slot.date) : "—");
+        return `
+          <div class="slot" title="${slot.label}: ${slot.date || '未設定'}${slot.adherence != null ? ' 遵守'+pct(slot.adherence) : ''}">
+            <div class="slot-label">${slot.label}</div>
+            <div class="bar-wrap"><div class="bar ${bc}" style="width:${w}"></div></div>
+            <div class="slot-meta">${pctText}</div>
+          </div>`;
+      }).join("");
+    }
+
+    function renderLstep(ls) {
+      if (!ls) {
+        return '<h4 style="margin-top:0.75rem">Lステップ進捗</h4><p style="font-size:0.82rem;color:var(--muted)">未取込 — python scripts/import_lstep.py</p>';
+      }
+      const step = ls.latest_step ? `STEP${ls.latest_step}` : "—";
+      const stepDate = ls.latest_step_date ? `（${ls.latest_step_date}）` : "";
+      const fp = ls.first_post_date ? `初投稿 ${ls.first_post_date}` : "初投稿 未";
+      const posts = ls.post_count != null ? `${ls.post_count}本` : "—";
+      return `
+        <h4 style="margin-top:0.75rem">Lステップ進捗</h4>
+        <p style="font-size:0.82rem">${escapeHtml(step)}完了 ${escapeHtml(String(ls.steps_completed ?? "—"))}/19 ${escapeHtml(stepDate)}</p>
+        <p style="font-size:0.82rem">${escapeHtml(fp)} / 投稿数 ${escapeHtml(posts)}</p>`;
+    }
+
+    function renderDetail(s) {
+      const ev = s.latest_evaluation;
+      const lstepBlock = renderLstep(s.lstep);
+      if (!ev) {
+        return `${lstepBlock}<p style="margin-top:0.75rem">まだ文字起こし分析がありません</p>`;
+      }
+      const labels = DATA.block_labels || {};
+      let blocks = "";
+      Object.entries(ev.blocks || {}).sort().forEach(([k, b]) => {
+        const st = (b && b.status) || "";
+        blocks += `<span class="block-chip ${st}">${k} ${labels[k] || ""}</span>`;
+      });
+      if (!blocks && ev.partial_blocks)
+        blocks = `<p>薄いパート: ${ev.partial_blocks}</p>`;
+
+      let hearing = "";
+      Object.entries(ev.hearing || {}).forEach(([k, v]) => {
+        if (!v || !v.value) return;
+        hearing += `<dt>${k}</dt><dd>${escapeHtml(v.value)}</dd>`;
+      });
+
+      const tq = s.time_quadrant || {};
+      const ng = s.nine_grid || {};
+      const attrs = s.attributes || {};
+      const hypos = (tq.hypotheses || []).map(h => `<li>${escapeHtml(h)}</li>`).join("");
+
+      return `
+        <div class="detail-grid">
+          <div class="detail-box">
+            <h4>MGサポート（主体的に行ったこと）</h4>
+            <div class="mg-notes-box">${escapeHtml(s.mg_support_notes || "未記入 — student_profiles.csv に追記")}</div>
+            <h4 style="margin-top:0.75rem">9マス：${escapeHtml(ng.name || "未設定")}</h4>
+            <p style="font-size:0.82rem">${escapeHtml(ng.focus || "")}</p>
+            <p style="font-size:0.75rem;color:var(--muted)">コーチャブル:${escapeHtml(ng.coachable_level||"—")} / 目標設定:${escapeHtml(ng.goal_level||"—")}</p>
+            ${renderLstep(s.lstep)}
+            <h4 style="margin-top:0.75rem">可処分時間 × 進捗</h4>
+            <p style="font-size:0.82rem">${escapeHtml(tq.label || "")} 
+              ${tq.disposable_hours_week != null ? `（週${tq.disposable_hours_week}h確保 / 使用${tq.time_used_hours_week ?? "?"}h）` : ""}</p>
+            ${hypos ? `<ul class="hypothesis-list">${hypos}</ul>` : ""}
+            <div class="attr-grid">
+              <div class="attr-item"><span>年齢</span>${escapeHtml(attrs.age || "—")}</div>
+              <div class="attr-item"><span>職業</span>${escapeHtml(attrs.occupation || "—")}</div>
+              <div class="attr-item"><span>動画経験</span>${escapeHtml(attrs.video_experience || "—")}</div>
+              <div class="attr-item"><span>PC</span>${escapeHtml(attrs.has_pc || "—")}</div>
+            </div>
+          </div>
+          <div class="detail-box">
+            <h4>構成ブロック（緑=伝達済 / 橙=薄い / 赤=欠落）</h4>
+            <div class="blocks">${blocks || "—"}</div>
+            <p style="margin-top:0.75rem;font-size:0.8rem;color:#374151">${escapeHtml(ev.structure_comment || "")}</p>
+            <h4 style="margin-top:0.75rem">ヒアリング抽出</h4>
+            <dl class="hearing-list">${hearing || "<dd>—</dd>"}</dl>
+          </div>
+        </div>`;
+    }
+
+    function render() {
+      const list = filterStudents();
+      const el = document.getElementById("list");
+      if (!list.length) {
+        el.innerHTML = '<div class="empty-state">該当する生徒がいません</div>';
+        return;
+      }
+
+      el.innerHTML = list.map((s) => {
+        const id = escapeHtml(s.student_name);
+        const days = spDays(s);
+        const attClass = s.needs_attention ? " attention" : "";
+
+        return `
+          <div class="row-wrap" data-id="${id}">
+            <div class="student-row${attClass}" data-id="${id}">
+              <input type="checkbox" onclick="event.stopPropagation()" />
+              <div class="identity">
+                <div class="name">${escapeHtml(s.student_name)}</div>
+                <div class="sub">${escapeHtml(s.user_id || "—")}</div>
+                <div class="tags">
+                  ${s.class_name ? `<span class="tag class">${escapeHtml(s.class_name)}</span>` : ""}
+                  ${s.mg_name ? `<span class="tag mg">${escapeHtml(s.mg_name)}</span>` : ""}
+                  ${s.genre ? `<span class="tag genre">${escapeHtml(String(s.genre).slice(0, 12))}</span>` : ""}
+                  ${s.overall_adherence != null ? `<span class="tag" style="background:#ffedd5;color:#c2410c">型${Math.round(s.overall_adherence*100)}%</span>` : ""}
+                </div>
+              </div>
+              <div class="sessions-track">${renderSlots(s.session_slots || [])}</div>
+              <div>${fpBadge(s.first_post)}</div>
+              <div>${quadBadge(s.time_quadrant)}</div>
+              <div>${gridBadge(s.nine_grid)}</div>
+              <div>${flagList(s.priority_flags)}</div>
+              <div><button class="btn-detail" type="button">詳細</button></div>
+            </div>
+            <div class="detail-panel" id="detail-${id}"></div>
+          </div>`;
+      }).join("");
+
+      el.querySelectorAll(".student-row").forEach((row) => {
+        row.addEventListener("click", (e) => {
+          if (e.target.tagName === "INPUT" || e.target.tagName === "BUTTON") return;
+          const id = row.dataset.id;
+          const s = list.find((x) => x.student_name === id);
+          toggleDetail(id, s, row);
+        });
+      });
+      el.querySelectorAll(".btn-detail").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const row = btn.closest(".student-row");
+          const id = row.dataset.id;
+          const s = list.find((x) => x.student_name === id);
+          toggleDetail(id, s, row);
+        });
+      });
+    }
+
+    function toggleDetail(id, s, row) {
+      const panel = document.getElementById("detail-" + id);
+      if (expandedId === id) {
+        panel.classList.remove("open");
+        row.classList.remove("expanded");
+        expandedId = null;
+        return;
+      }
+      document.querySelectorAll(".detail-panel.open").forEach((p) => p.classList.remove("open"));
+      document.querySelectorAll(".student-row.expanded").forEach((r) => r.classList.remove("expanded"));
+      panel.innerHTML = renderDetail(s);
+      panel.classList.add("open");
+      row.classList.add("expanded");
+      expandedId = id;
+    }
+
+    function escapeHtml(t) {
+      if (t == null) return "";
+      const d = document.createElement("div");
+      d.textContent = String(t);
+      return d.innerHTML;
+    }
+
+    function fillFilters() {
+      const mgs = [...new Set(DATA.students.map((s) => s.mg_name).filter(Boolean))].sort();
+      const classes = [...new Set(DATA.students.map((s) => s.class_name).filter(Boolean))].sort();
+      mgs.forEach((m) => {
+        const o = document.createElement("option");
+        o.value = m; o.textContent = m;
+        document.getElementById("filter-mg").appendChild(o);
+      });
+      classes.forEach((c) => {
+        const o = document.createElement("option");
+        o.value = c; o.textContent = c;
+        document.getElementById("filter-class").appendChild(o);
+      });
+    }
+
+    function renderSummary() {
+      const s = DATA.summary;
+      document.getElementById("updated-at").textContent =
+        "更新 " + new Date(DATA.generated_at).toLocaleString("ja-JP");
+      document.getElementById("stat-pills").innerHTML = `
+        <span class="pill">生徒 <strong>${s.total_students}</strong></span>
+        <span class="pill">要注力 <strong>${s.needs_attention_count || 0}</strong></span>
+        <span class="pill">分析済 <strong>${s.total_evaluations}</strong></span>
+        <span class="pill">平均遵守 <strong>${pct(s.adherence_mean)}</strong></span>`;
+    }
+
+    document.getElementById("nav-mg").addEventListener("click", (e) => {
+      e.preventDefault();
+      alert(DATA.mg_stats.map((m) =>
+        `${m.mg_name}: 平均${pct(m.adherence_mean)} (${m.count}件)`
+      ).join("\n") || "MGデータなし");
+    });
+
+    ["q", "filter-mg", "filter-class", "filter-eval", "filter-attention", "filter-quadrant"].forEach((id) => {
+      document.getElementById(id).addEventListener("input", render);
+      document.getElementById(id).addEventListener("change", render);
+    });
+
+    async function load() {
+      try {
+        const res = await fetch("data.json?" + Date.now());
+        if (!res.ok) throw new Error("data.json がありません");
+        DATA = await res.json();
+        fillFilters();
+        renderSummary();
+        render();
+      } catch (e) {
+        document.getElementById("list").innerHTML =
+          `<div class="empty-state">${e.message}<br><br>python scripts/build_dashboard.py</div>`;
+      }
+    }
+    load();
+  </script>
+</body>
+</html>

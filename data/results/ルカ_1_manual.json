@@ -1,0 +1,61 @@
+{
+  "structure": {
+    "session_number": 1,
+    "student_id": "ルカ",
+    "mg_name": "小針",
+    "session_date": "2026-04-28",
+    "duration_minutes": 68,
+    "blocks": {
+      "A1": {"status": "partial", "evidence": "冒頭はメモ取りの説明から。伴走・味方は途中以降で明示。開始時の定型挨拶・「半年担当MG」宣言は弱い"},
+      "A2": {"status": "covered", "evidence": "約1時間、コーチング説明→ルール→自己紹介→半年目標→日程調整の流れを説明"},
+      "A3": {"status": "covered", "evidence": "小針綾乃、28歳、福島、マネージャー経歴・趣味など詳細に自己紹介"},
+      "A4": {"status": "covered", "evidence": "名前・年齢・居住地・仕事をルカさんに聞く"},
+      "A5": {"status": "covered", "evidence": "結婚・旦那・ワンちゃん、仕事変遷、夜遅い仕事からの転換など傾聴"},
+      "A6": {"status": "covered", "evidence": "無料勉強会、直也さんアカウント、模索より環境で学びたい"},
+      "A7": {"status": "partial", "evidence": "進捗が良い旨・クラチャ・Stepは触れるが「つまづきはあるか」の定型確認は薄い"},
+      "B1": {"status": "partial", "evidence": "カウンセリング/ティーチング/コーチングの違い・ナビ比喩は丁寧。ただし「質=講師・量=MG」の一言整理はなし"},
+      "B2": {"status": "covered", "evidence": "半年百投稿、初投稿30日以内、次10投稿、行動量の重要性"},
+      "B3": {"status": "partial", "evidence": "味方・伴走・自責思考はある。自走・失敗OK・「見捨てない」系は誓約書・五つの共通点に分散"},
+      "C1": {"status": "covered", "evidence": "11回、初月毎週→隔週→月1の説明"},
+      "C2": {"status": "partial", "evidence": "15分無連絡で消化、前日21時変更、リスケ2回は説明。顔出し・静かな環境の依頼はなし"},
+      "C3": {"status": "partial", "evidence": "日報・24時間返信は説明。スタンプ可の明示はなし"},
+      "D1": {"status": "covered", "evidence": "月収80万、結婚式・マイホーム・旅行など夢を深掘り"},
+      "D2": {"status": "covered", "evidence": "SP開始4/14、30日以内初投稿（5/14目安）"},
+      "D3": {"status": "covered", "evidence": "ロードマップシートで収益・投稿・フォロワー目標を設定"},
+      "D4": {"status": "covered", "evidence": "5月〜11月まで複数回の日程を確定"},
+      "D5": {"status": "partial", "evidence": "今月のプログラム完了・初投稿目標は設定。週次行動表は来週に先送り"},
+      "D6": {"status": "partial", "evidence": "日報テンプレ送付・朝提出依頼。具体的な締切時刻の合意はなし"},
+      "E1": {"status": "partial", "evidence": "伴走への感謝・Discord連絡。虎の巻の力強い締め台詞は控えめ"}
+    },
+    "missing_blocks": [],
+    "partial_blocks": ["A1", "A7", "B1", "B3", "C2", "C3", "D5", "D6", "E1"],
+    "structure_adherence_rate": 0.868,
+    "structure_adherence_comment": "虎の巻の必須パートはおおむね伝わっており、パート丸ごとの欠落はない。一方で進行順が型と異なり（コーチング・ルールを自己紹介より先に実施）、顔出し環境依頼・質と量の整理・日報締切時刻などは薄い。",
+    "script_delivery_likelihood": "high",
+    "script_delivery_likelihood_reason": "遵守率0.87、missingなし。構成としての欠落はないが、複数パートがpartial"
+  },
+  "hearing": {
+    "session_number": 1,
+    "student_id": "ルカ",
+    "days_from_sp_start": 14,
+    "family_structure": {"value": "2026年2月結婚。北九州在住。旦那（パーソナルトレーナー・ジム経営）・ワンちゃん（ヨークシャテリア）と3人暮らし", "confidence": "high", "evidence": "自己紹介で明言"},
+    "genre": {"value": "ダイエット系（旦那トレーナー活用）。前撮り・結婚式コンテンツも検討", "confidence": "high", "evidence": "ゆういち1ON1後の方向性の話"},
+    "age": {"value": "27歳", "confidence": "high", "evidence": "自己紹介"},
+    "occupation": {"value": "フリーランス動画編集（広島系エンタメ案件）。元保育士6年→キッズ体操教室約1年", "confidence": "high", "evidence": "経歴の説明"},
+    "computer_literacy": {"value": "YouTube長尺編集の実務経験あり（10分以上素材）。編集には慣れている", "confidence": "high", "evidence": "動画編集の具体的エピソード"},
+    "session1_satisfaction": {"value": "終盤「大丈夫そうです」—大きな不安の表明はなし", "confidence": "medium", "evidence": "不明点確認への返答"},
+    "join_motivation": {"value": "無料勉強会→環境で学びたい。直也さん（福岡カフェ）経由。月収80万・結婚式等の実現", "confidence": "high", "evidence": "きっかけと目標設定パート"},
+    "step_at_session": {"value": "初投稿達成プログラム・プロフィール作成あたり（Step12前後）", "confidence": "high", "evidence": "「プロフィール作成十二」"},
+    "step_at_assign": {"value": null, "confidence": "not_mentioned", "evidence": "文字起こしにアサイン時ステップの記載なし"},
+    "time_before_coach": {"value": "YouTube編集・スポーツ教室で夜遅く、家事と両立が困難だった", "confidence": "high", "evidence": "自己紹介"},
+    "work_time_availability": {"value": "フリーランスで日によるが、事前に枠を取れば調整可能", "confidence": "medium", "evidence": "日程調整時の発言"},
+    "time_change_before_after": {"value": null, "confidence": "not_mentioned", "evidence": "セッション後の変化は未言及（今後日報で追う想定）"},
+    "step_progress_before_session": {"value": "SP開始から約2週間でプロフィール設計まで進行、MGも進捗良好と評価", "confidence": "medium", "evidence": "クラチャ・Stepの言及"},
+    "step_progress_after_session": {"value": "今月：初投稿達成プログラム完了・初投稿1本・日報開始。来週までに週次行動表", "confidence": "high", "evidence": "目標設定・クロージング"}
+  },
+  "meta": {
+    "evaluated_at": "2026-05-26T00:00:00Z",
+    "method": "manual_review",
+    "source": "user_pasted_transcript"
+  }
+}

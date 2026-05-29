@@ -1,0 +1,5157 @@
+{
+  "generated_at": "2026-05-27T08:05:26.224352+00:00",
+  "block_labels": {
+    "A1": "挨拶・役割",
+    "A2": "本日の流れ",
+    "A3": "MG自己紹介",
+    "A4": "生徒自己紹介",
+    "A5": "傾聴・家族",
+    "A6": "入会きっかけ",
+    "A7": "学習状況",
+    "B1": "講師とMGの役割",
+    "B2": "初速・完了主義",
+    "B3": "マインドセット",
+    "C1": "セッション回数",
+    "C2": "参加・遅刻ルール",
+    "C3": "日報・返信",
+    "D1": "半年目標",
+    "D2": "SP開始・初投稿",
+    "D3": "目標シート",
+    "D4": "次回日程",
+    "D5": "タスク具体化",
+    "D6": "日報フォーマット",
+    "E1": "クロージング",
+    "01": "アイスブレイク",
+    "02": "現状確認",
+    "03": "課題明確化",
+    "04": "目標再認識",
+    "05": "タスク明確化",
+    "06": "決意表明",
+    "07": "クロージング"
+  },
+  "hearing_keys": [
+    "family_structure",
+    "genre",
+    "age",
+    "occupation",
+    "computer_literacy",
+    "session1_satisfaction",
+    "join_motivation",
+    "step_at_session",
+    "step_at_assign",
+    "time_before_coach",
+    "work_time_availability",
+    "time_change_before_after",
+    "step_progress_before_session",
+    "step_progress_after_session"
+  ],
+  "summary": {
+    "total_students": 24,
+    "total_evaluations": 1,
+    "roster_count": 24,
+    "lstep_count": 145,
+    "needs_attention_count": 24,
+    "adherence_mean": 0.868,
+    "high_count": 1,
+    "medium_count": 0,
+    "low_count": 0
+  },
+  "nine_grid_legend": {
+    "1": {
+      "name": "ロケット",
+      "short": "①ロケット",
+      "focus": "KPI・習慣化・振り返り構造化で負荷を上げる"
+    },
+    "2": {
+      "name": "エンジン強・目的地薄い",
+      "short": "②目的地薄い",
+      "focus": "価値観・ノーススター・本音の目標を深掘り"
+    },
+    "3": {
+      "name": "いい人・他人ゴール",
+      "short": "③他人ゴール",
+      "focus": "やらされ感の正体・内発的動機の発掘"
+    },
+    "4": {
+      "name": "熱いが詰まりやすい",
+      "short": "④ブレーキ持ち",
+      "focus": "最小行動・実験思考・完璧主義のブレーキ解除"
+    },
+    "5": {
+      "name": "平均的に前進",
+      "short": "⑤平均前進",
+      "focus": "振り返りの質・可視化・ピークステート"
+    },
+    "6": {
+      "name": "受け身の継続",
+      "short": "⑥受け身",
+      "focus": "放置コストと変化の快・決断を作る"
+    },
+    "7": {
+      "name": "燃えてるが聞かない",
+      "short": "⑦我流",
+      "focus": "7日間実験提案・進化としての変化"
+    },
+    "8": {
+      "name": "プライド防衛",
+      "short": "⑧防衛",
+      "focus": "事実ベースの現状把握・ごまかさない"
+    },
+    "9": {
+      "name": "漂流",
+      "short": "⑨漂流",
+      "focus": "コーチング契約の再確認・感情の糸口"
+    }
+  },
+  "time_quadrant_legend": [
+    "high_high",
+    "high_low",
+    "low_high",
+    "low_low"
+  ],
+  "mg_stats": [
+    {
+      "mg_name": "小針",
+      "count": 1,
+      "adherence_mean": 0.868,
+      "high_rate": 1.0
+    }
+  ],
+  "students": [
+    {
+      "student_name": "せとすずか",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/_hamuC-350f3b0fba8580ce8f27fac7f79d6bf9",
+      "teacher": "hamu",
+      "class_name": "C組",
+      "mentor": "hamu",
+      "sp_start_date": "2026-04-15",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "八木秋歩",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-04-26"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-06"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-13"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-04-26",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-06",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-13",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 3,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -12,
+        "on_track": false,
+        "days_after_sp": 42
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "777334233473",
+        "steps_completed": 16.0,
+        "latest_step": "16",
+        "latest_step_date": "2026-05-08",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "こみやみゆき",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/34cf3b0fba858036abbbe968dfdbc6e5",
+      "teacher": "Cherry",
+      "class_name": "A組",
+      "mentor": "Cherry",
+      "sp_start_date": "2026-04-22",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "藤井里果",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-02"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-09"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-17"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-23"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-05-30"
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": "2026-06-06"
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": "2026-06-13"
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-02",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-09",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-17",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-23",
+          "session_number": 6,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-05-30",
+          "session_number": 7,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": "2026-06-06",
+          "session_number": 8,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": "2026-06-13",
+          "session_number": 9,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 7,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -5,
+        "on_track": false,
+        "days_after_sp": 35
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "375009284172",
+        "steps_completed": 16.0,
+        "latest_step": "16",
+        "latest_step_date": "2026-05-23",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "さとうなおみ",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/_-B-353f3b0fba858040b883d1fcb653e533",
+      "teacher": "ゆうごはん",
+      "class_name": "B組",
+      "mentor": "ゆうごはん",
+      "sp_start_date": "2026-04-21",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "八木秋歩",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": null
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": null
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": null
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": null,
+          "session_number": 3,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": null,
+          "session_number": 4,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": null,
+          "session_number": 5,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 0,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -6,
+        "on_track": false,
+        "days_after_sp": 36
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "719339794000",
+        "steps_completed": 9.0,
+        "latest_step": "9",
+        "latest_step_date": "2026-05-07",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "くぼたまきこ",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/a-352f3b0fba8580a1bbc8d3ef46681b9e",
+      "teacher": "なかみ",
+      "class_name": "A組",
+      "mentor": "なかみ",
+      "sp_start_date": "2026-04-22",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "橋本友梨",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-03"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-17"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-25"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-06-02"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-06-09"
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": "2026-06-15"
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": "2026-06-22"
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-03",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-17",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-25",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-06-02",
+          "session_number": 6,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-06-09",
+          "session_number": 7,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": "2026-06-15",
+          "session_number": 8,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": "2026-06-22",
+          "session_number": 9,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 7,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -5,
+        "on_track": false,
+        "days_after_sp": 35
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "809735457232",
+        "steps_completed": 11.0,
+        "latest_step": "11",
+        "latest_step_date": "2026-05-19",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "すがさわだいすけ",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/b-34ff3b0fba85807d94e6cd2916425c91",
+      "teacher": "ここママ",
+      "class_name": "B組",
+      "mentor": "ここママ",
+      "sp_start_date": "2026-04-22",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "田中瑞稀",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-04-27"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-04"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-12"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-26"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-04-27",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-04",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-12",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-26",
+          "session_number": 6,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 4,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -5,
+        "on_track": false,
+        "days_after_sp": 35
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "460424310583",
+        "steps_completed": 17.0,
+        "latest_step": "17",
+        "latest_step_date": "2026-05-23",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "のづじゅん",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/_-A-353f3b0fba858061b09bfeb81d3e2680",
+      "teacher": "ひだまり",
+      "class_name": "A組",
+      "mentor": "ひだまり",
+      "sp_start_date": "2026-04-25",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "八木秋歩",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-04"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-12"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-19"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-04",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-12",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-19",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 3,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -2,
+        "on_track": false,
+        "days_after_sp": 32
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "781021558643",
+        "steps_completed": 15.0,
+        "latest_step": "15",
+        "latest_step_date": "2026-05-21",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "ふくだえりな",
+      "user_id": "",
+      "notion_url": "",
+      "teacher": "",
+      "class_name": "",
+      "mentor": "",
+      "sp_start_date": "2026-04-23",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "藤嶋未来",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": null
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": null
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": null
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": null,
+          "session_number": 3,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": null,
+          "session_number": 4,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": null,
+          "session_number": 5,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 0,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -4,
+        "on_track": false,
+        "days_after_sp": 34
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "198509322025",
+        "steps_completed": 9.0,
+        "latest_step": "9",
+        "latest_step_date": "2026-05-13",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "いいじまいつき",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/b-352f3b0fba85809f9656e8761490dc98",
+      "teacher": "",
+      "class_name": "",
+      "mentor": "",
+      "sp_start_date": "2026-04-24",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "橋本友梨",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-03"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-14"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-25"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-06-01"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-06-08"
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-03",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-14",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-25",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-06-01",
+          "session_number": 6,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-06-08",
+          "session_number": 7,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -3,
+        "on_track": false,
+        "days_after_sp": 33
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "144392406211",
+        "steps_completed": 19.0,
+        "latest_step": "19",
+        "latest_step_date": "2026-05-24",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "あさもとゆみ",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/a-359f3b0fba8580b59b9af3b4a8b209ee",
+      "teacher": "",
+      "class_name": "",
+      "mentor": "",
+      "sp_start_date": "2026-04-27",
+      "first_session_date": null,
+      "support_end_date": null,
+      "mg_name": "矢野直美",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-07"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-14"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-21"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-28"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-06-11"
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": "2026-06-18"
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": "2026-06-23"
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": null,
+          "session_number": 1,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-07",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-14",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-21",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-28",
+          "session_number": 6,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-06-11",
+          "session_number": 7,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": "2026-06-18",
+          "session_number": 8,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": "2026-06-23",
+          "session_number": 9,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 7,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "at_risk",
+        "label": "残り0日・要加速",
+        "days_to_deadline": 0,
+        "on_track": false,
+        "days_after_sp": 30
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "815526169932",
+        "steps_completed": 19.0,
+        "latest_step": "19",
+        "latest_step_date": "2026-05-23",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "なかむらほのか",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/_-C-34bf3b0fba8580fdb694c2f68e4f65b9",
+      "teacher": "のの先生",
+      "class_name": "C組",
+      "mentor": "のの先生",
+      "sp_start_date": "2026-04-20",
+      "first_session_date": "2026-04-26",
+      "support_end_date": "2026-10-22",
+      "mg_name": "長澤郁子",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-26"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-26"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-02"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-14"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-23"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-29"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-26",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-26",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-02",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-14",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-23",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-29",
+          "session_number": 6,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 6,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -7,
+        "on_track": false,
+        "days_after_sp": 37
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "662583500984",
+        "steps_completed": 15.0,
+        "latest_step": "15",
+        "latest_step_date": "2026-05-22",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "さかもとななえ",
+      "user_id": "@nanae_no_gohan",
+      "notion_url": "https://www.notion.so/_hamuC-34ff3b0fba85801d9c28e4a1b84b6918?source=copy_link",
+      "teacher": "hamu",
+      "class_name": "C組",
+      "mentor": "hamu",
+      "sp_start_date": "2026-04-17",
+      "first_session_date": "2026-04-27",
+      "support_end_date": "2026-10-23",
+      "mg_name": "櫻井日奈子",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-27"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-27"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-06"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-13"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-20"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-27"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-06-03"
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": "2026-06-10"
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-27",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-27",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-06",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-13",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-20",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-27",
+          "session_number": 6,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": "2026-06-03",
+          "session_number": 7,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": "2026-06-10",
+          "session_number": 8,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 8,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -10,
+        "on_track": false,
+        "days_after_sp": 40
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "626817118642",
+        "steps_completed": 19.0,
+        "latest_step": "19",
+        "latest_step_date": "2026-05-13",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "こいでるか",
+      "user_id": "@hiroruka_bodymake",
+      "notion_url": "https://www.notion.so/b-34ff3b0fba8580df95f0fc52e205f1f1?source=copy_link",
+      "teacher": "ユウイチ",
+      "class_name": "B組",
+      "mentor": "ユウイチ",
+      "sp_start_date": "2026-04-14",
+      "first_session_date": "2026-04-28",
+      "support_end_date": "2026-10-24",
+      "mg_name": "小針彩乃",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-28"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-28"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-07"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-21"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-06-04"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-28",
+          "session_number": 1,
+          "status": "analyzed",
+          "adherence": 0.868,
+          "likelihood": "high",
+          "has_evaluation": true
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-28",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-07",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-21",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-06-04",
+          "session_number": 5,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 1,
+      "overall_adherence": 0.868,
+      "latest_evaluation": {
+        "id": 1,
+        "student_id": "ルカ",
+        "mg_name": "小針",
+        "session_number": 1,
+        "session_date": "2026-04-28",
+        "sp_start_date": null,
+        "days_from_sp_start": 14,
+        "evaluated_at": "2026-05-26T00:00:00Z",
+        "evaluation_method": "manual_review",
+        "structure_adherence_rate": 0.868,
+        "script_delivery_likelihood": "high",
+        "missing_blocks": "",
+        "partial_blocks": "A1,A7,B1,B3,C2,C3,D5,D6,E1",
+        "structure_comment": "虎の巻の必須パートはおおむね伝わっており、パート丸ごとの欠落はない。一方で進行順が型と異なり（コーチング・ルールを自己紹介より先に実施）、顔出し環境依頼・質と量の整理・日報締切時刻などは薄い。",
+        "transcript_source": "user_pasted_transcript",
+        "result_json_path": "data/results/ルカ_1_manual.json",
+        "hearing": {
+          "family_structure": {
+            "value": "2026年2月結婚。北九州在住。旦那（パーソナルトレーナー・ジム経営）・ワンちゃん（ヨークシャテリア）と3人暮らし",
+            "confidence": "high"
+          },
+          "genre": {
+            "value": "ダイエット系（旦那トレーナー活用）。前撮り・結婚式コンテンツも検討",
+            "confidence": "high"
+          },
+          "age": {
+            "value": "27歳",
+            "confidence": "high"
+          },
+          "occupation": {
+            "value": "フリーランス動画編集（広島系エンタメ案件）。元保育士6年→キッズ体操教室約1年",
+            "confidence": "high"
+          },
+          "computer_literacy": {
+            "value": "YouTube長尺編集の実務経験あり（10分以上素材）。編集には慣れている",
+            "confidence": "high"
+          },
+          "session1_satisfaction": {
+            "value": "終盤「大丈夫そうです」—大きな不安の表明はなし",
+            "confidence": "medium"
+          },
+          "join_motivation": {
+            "value": "無料勉強会→環境で学びたい。直也さん（福岡カフェ）経由。月収80万・結婚式等の実現",
+            "confidence": "high"
+          },
+          "step_at_session": {
+            "value": "初投稿達成プログラム・プロフィール作成あたり（Step12前後）",
+            "confidence": "high"
+          },
+          "step_at_assign": {
+            "value": null,
+            "confidence": "not_mentioned"
+          },
+          "time_before_coach": {
+            "value": "YouTube編集・スポーツ教室で夜遅く、家事と両立が困難だった",
+            "confidence": "high"
+          },
+          "work_time_availability": {
+            "value": "フリーランスで日によるが、事前に枠を取れば調整可能",
+            "confidence": "medium"
+          },
+          "time_change_before_after": {
+            "value": null,
+            "confidence": "not_mentioned"
+          },
+          "step_progress_before_session": {
+            "value": "SP開始から約2週間でプロフィール設計まで進行、MGも進捗良好と評価",
+            "confidence": "medium"
+          },
+          "step_progress_after_session": {
+            "value": "今月：初投稿達成プログラム完了・初投稿1本・日報開始。来週までに週次行動表",
+            "confidence": "high"
+          }
+        },
+        "blocks": {
+          "A1": {
+            "status": "partial",
+            "evidence": "冒頭はメモ取りの説明から。伴走・味方は途中以降で明示。開始時の定型挨拶・「半年担当MG」宣言は弱い"
+          },
+          "A2": {
+            "status": "covered",
+            "evidence": "約1時間、コーチング説明→ルール→自己紹介→半年目標→日程調整の流れを説明"
+          },
+          "A3": {
+            "status": "covered",
+            "evidence": "小針綾乃、28歳、福島、マネージャー経歴・趣味など詳細に自己紹介"
+          },
+          "A4": {
+            "status": "covered",
+            "evidence": "名前・年齢・居住地・仕事をルカさんに聞く"
+          },
+          "A5": {
+            "status": "covered",
+            "evidence": "結婚・旦那・ワンちゃん、仕事変遷、夜遅い仕事からの転換など傾聴"
+          },
+          "A6": {
+            "status": "covered",
+            "evidence": "無料勉強会、直也さんアカウント、模索より環境で学びたい"
+          },
+          "A7": {
+            "status": "partial",
+            "evidence": "進捗が良い旨・クラチャ・Stepは触れるが「つまづきはあるか」の定型確認は薄い"
+          },
+          "B1": {
+            "status": "partial",
+            "evidence": "カウンセリング/ティーチング/コーチングの違い・ナビ比喩は丁寧。ただし「質=講師・量=MG」の一言整理はなし"
+          },
+          "B2": {
+            "status": "covered",
+            "evidence": "半年百投稿、初投稿30日以内、次10投稿、行動量の重要性"
+          },
+          "B3": {
+            "status": "partial",
+            "evidence": "味方・伴走・自責思考はある。自走・失敗OK・「見捨てない」系は誓約書・五つの共通点に分散"
+          },
+          "C1": {
+            "status": "covered",
+            "evidence": "11回、初月毎週→隔週→月1の説明"
+          },
+          "C2": {
+            "status": "partial",
+            "evidence": "15分無連絡で消化、前日21時変更、リスケ2回は説明。顔出し・静かな環境の依頼はなし"
+          },
+          "C3": {
+            "status": "partial",
+            "evidence": "日報・24時間返信は説明。スタンプ可の明示はなし"
+          },
+          "D1": {
+            "status": "covered",
+            "evidence": "月収80万、結婚式・マイホーム・旅行など夢を深掘り"
+          },
+          "D2": {
+            "status": "covered",
+            "evidence": "SP開始4/14、30日以内初投稿（5/14目安）"
+          },
+          "D3": {
+            "status": "covered",
+            "evidence": "ロードマップシートで収益・投稿・フォロワー目標を設定"
+          },
+          "D4": {
+            "status": "covered",
+            "evidence": "5月〜11月まで複数回の日程を確定"
+          },
+          "D5": {
+            "status": "partial",
+            "evidence": "今月のプログラム完了・初投稿目標は設定。週次行動表は来週に先送り"
+          },
+          "D6": {
+            "status": "partial",
+            "evidence": "日報テンプレ送付・朝提出依頼。具体的な締切時刻の合意はなし"
+          },
+          "E1": {
+            "status": "partial",
+            "evidence": "伴走への感謝・Discord連絡。虎の巻の力強い締め台詞は控えめ"
+          }
+        }
+      },
+      "genre": "ダイエット系（旦那トレーナー活用）。前撮り・結婚式コンテンツも検討",
+      "attributes": {
+        "age": "27",
+        "occupation": "フリーランス動画編集",
+        "video_experience": "あり",
+        "has_pc": "あり",
+        "genre": "ダイエット系"
+      },
+      "disposable_hours_week": 12.0,
+      "time_used_hours_week": 4.0,
+      "mg_support_notes": "初回セッションで夜型・YouTube編集負荷あり。週次で可処分時間の再確認を実施予定",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -13,
+        "on_track": false,
+        "days_after_sp": 43
+      },
+      "time_quadrant": {
+        "label": "時間あり×進んでいない",
+        "color": "red",
+        "hypotheses": [
+          "虚偽報告の可能性",
+          "具体的な進め方・参考リソースが不明",
+          "完璧主義で手が止まっている",
+          "ツール操作に時間を取られている",
+          "課題で何が求められているか不明",
+          "講師添削のハードルが高くクオリティにこだわりすぎ"
+        ],
+        "key": "high_low",
+        "disposable_hours_week": 12.0,
+        "time_used_hours_week": 4.0,
+        "unused_ratio": 0.6666666666666667,
+        "progress_score": 0.27
+      },
+      "nine_grid": {
+        "cell": 4,
+        "name": "熱いが詰まりやすい",
+        "short": "④ブレーキ持ち",
+        "focus": "最小行動・実験思考・完璧主義のブレーキ解除",
+        "coachable_level": "中",
+        "goal_level": "高"
+      },
+      "priority_flags": [
+        "初投稿30日",
+        "時間多・進捗少"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "511488033069",
+        "steps_completed": 19.0,
+        "latest_step": "19",
+        "latest_step_date": "2026-05-15",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "くろこなおき",
+      "user_id": "",
+      "notion_url": "",
+      "teacher": "ユウイチ",
+      "class_name": "B組",
+      "mentor": "ユウイチ",
+      "sp_start_date": "2026-04-21",
+      "first_session_date": "2026-04-28",
+      "support_end_date": "2026-10-24",
+      "mg_name": "木村友紀",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-28"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-28"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-07"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-14"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-21"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-06-05"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-28",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-28",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-07",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-14",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-21",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-06-05",
+          "session_number": 6,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 6,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -6,
+        "on_track": false,
+        "days_after_sp": 36
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "873476404135",
+        "steps_completed": 15.0,
+        "latest_step": "15",
+        "latest_step_date": "2026-05-20",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "はなもとけいこ",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/_-A-351f3b0fba85805ba206fcb401c153b3?source=copy_link",
+      "teacher": "ゆうさく先生",
+      "class_name": "A組",
+      "mentor": "ゆうさく先生",
+      "sp_start_date": "2026-04-18",
+      "first_session_date": "2026-04-29",
+      "support_end_date": "2026-10-25",
+      "mg_name": "小熊来瑠美",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-29"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-29"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-09"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-16"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-22"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-28"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-04-29",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-04-29",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-09",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-16",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-22",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-28",
+          "session_number": 6,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 6,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -9,
+        "on_track": false,
+        "days_after_sp": 39
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "484104300819",
+        "steps_completed": 12.0,
+        "latest_step": "12",
+        "latest_step_date": "2026-05-22",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "おかもとまこ",
+      "user_id": "@moca_ikuji",
+      "notion_url": "https://www.notion.so/353f3b0fba8580568607eb034dbbe023",
+      "teacher": "のの先生",
+      "class_name": "C組",
+      "mentor": "のの先生",
+      "sp_start_date": "2026-04-16",
+      "first_session_date": "2026-05-01",
+      "support_end_date": "2026-10-27",
+      "mg_name": "カン紀子",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-01"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-01"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-08"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-18"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-27"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-01",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": null,
+          "session_number": 2,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-01",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-08",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-18",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-27",
+          "session_number": 6,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -11,
+        "on_track": false,
+        "days_after_sp": 41
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "509868597611",
+        "steps_completed": 16.0,
+        "latest_step": "16",
+        "latest_step_date": "2026-05-15",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "ますだひかり",
+      "user_id": "",
+      "notion_url": "",
+      "teacher": "ここママ",
+      "class_name": "B組",
+      "mentor": "ここママ",
+      "sp_start_date": null,
+      "first_session_date": "2026-05-02",
+      "support_end_date": "2026-10-28",
+      "mg_name": "小熊来瑠美",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-02"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-02"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-08"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-16"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-20"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-29"
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-02",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-02",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-08",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-16",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-20",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": "2026-05-29",
+          "session_number": 6,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 6,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "unknown",
+        "label": "SP開始日不明",
+        "days_to_deadline": null,
+        "on_track": null
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "未分析"
+      ],
+      "needs_attention": true
+    },
+    {
+      "student_name": "むなかたさよ",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/358f3b0fba8580f091b0fc688a081d87",
+      "teacher": "",
+      "class_name": "",
+      "mentor": "",
+      "sp_start_date": "2026-04-26",
+      "first_session_date": "2026-05-02",
+      "support_end_date": "2026-10-28",
+      "mg_name": "福田康裕",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-02"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-02"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-13"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-20"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-29"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-02",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-02",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-13",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-20",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-29",
+          "session_number": 5,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -1,
+        "on_track": false,
+        "days_after_sp": 31
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "261740678382",
+        "steps_completed": 9.0,
+        "latest_step": "9",
+        "latest_step_date": "2026-05-21",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "おかむらたかこ",
+      "user_id": "",
+      "notion_url": "",
+      "teacher": "",
+      "class_name": "",
+      "mentor": "",
+      "sp_start_date": "2026-04-25",
+      "first_session_date": "2026-05-03",
+      "support_end_date": "2026-10-29",
+      "mg_name": "小熊来瑠美",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-03"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-03"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-10"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-17"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-26"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-03",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-03",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-10",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-17",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-26",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -2,
+        "on_track": false,
+        "days_after_sp": 32
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "705185771689",
+        "steps_completed": 11.0,
+        "latest_step": "11",
+        "latest_step_date": "2026-05-24",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "なおやまゆうや",
+      "user_id": "",
+      "notion_url": "",
+      "teacher": "",
+      "class_name": "",
+      "mentor": "",
+      "sp_start_date": "2026-04-26",
+      "first_session_date": "2026-05-03",
+      "support_end_date": "2026-10-29",
+      "mg_name": "小熊来瑠美",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-03"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-03"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-10"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-17"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-26"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-03",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-03",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-10",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-17",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-26",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -1,
+        "on_track": false,
+        "days_after_sp": 31
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "698635204603",
+        "steps_completed": 17.0,
+        "latest_step": "17",
+        "latest_step_date": "2026-05-22",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "なんばあんに",
+      "user_id": "tokyocafe_anni",
+      "notion_url": "https://www.notion.so/B-355f3b0fba85807e90f8e6f3a36624ca",
+      "teacher": "ユウイチ",
+      "class_name": "B組",
+      "mentor": "ユウイチ",
+      "sp_start_date": null,
+      "first_session_date": "2026-05-04",
+      "support_end_date": "2026-10-30",
+      "mg_name": "藪田麻菜美",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-04"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-04"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-12"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-20"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-27"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-04",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-04",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-12",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-20",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-27",
+          "session_number": 5,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "unknown",
+        "label": "SP開始日不明",
+        "days_to_deadline": null,
+        "on_track": null
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "未分析"
+      ],
+      "needs_attention": true
+    },
+    {
+      "student_name": "わたなべありさ",
+      "user_id": "",
+      "notion_url": "",
+      "teacher": "",
+      "class_name": "",
+      "mentor": "",
+      "sp_start_date": "2026-04-24",
+      "first_session_date": "2026-05-07",
+      "support_end_date": "2026-11-02",
+      "mg_name": "塚田祥子",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-07"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-07"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-15"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-21"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-29"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-07",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-07",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-15",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-21",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-29",
+          "session_number": 5,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -3,
+        "on_track": false,
+        "days_after_sp": 33
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "795623113683",
+        "steps_completed": 18.0,
+        "latest_step": "18",
+        "latest_step_date": "2026-05-24",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "たけだみえこ",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/340f3b0fba8580e2a6dcd5b5e6eba7bf",
+      "teacher": "あこ",
+      "class_name": "C組",
+      "mentor": "あこ",
+      "sp_start_date": "2026-04-20",
+      "first_session_date": "2026-05-08",
+      "support_end_date": "2026-11-03",
+      "mg_name": "福島雪乃",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-08"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-08"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-14"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-22"
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-29"
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-08",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-08",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-14",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": "2026-05-22",
+          "session_number": 4,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": "2026-05-29",
+          "session_number": 5,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 5,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -7,
+        "on_track": false,
+        "days_after_sp": 37
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "898318215594",
+        "steps_completed": 17.0,
+        "latest_step": "17",
+        "latest_step_date": "2026-05-25",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "いのうえなおこ",
+      "user_id": "",
+      "notion_url": "",
+      "teacher": "はる",
+      "class_name": "H組",
+      "mentor": "はる",
+      "sp_start_date": "2026-04-21",
+      "first_session_date": "2026-05-17",
+      "support_end_date": "2026-11-12",
+      "mg_name": "福田康裕",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-01"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-17"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-27"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": null
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": null
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-01",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-17",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-27",
+          "session_number": 3,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": null,
+          "session_number": 4,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": null,
+          "session_number": 5,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 3,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -6,
+        "on_track": false,
+        "days_after_sp": 36
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "905951842899",
+        "steps_completed": 13.0,
+        "latest_step": "13",
+        "latest_step_date": "2026-05-12",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    },
+    {
+      "student_name": "さいとうなつみ",
+      "user_id": "",
+      "notion_url": "https://www.notion.so/d-34bf3b0fba85807cb537cc4a44aeab96?source=copy_link",
+      "teacher": "ますこ",
+      "class_name": "B組",
+      "mentor": "ますこ",
+      "sp_start_date": "2026-04-13",
+      "first_session_date": "2026-05-20",
+      "support_end_date": "2026-11-15",
+      "mg_name": "宮田友理",
+      "scheduled_sessions": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-20"
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-20"
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-31"
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": null
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": null
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null
+        }
+      ],
+      "session_slots": [
+        {
+          "slot": 0,
+          "label": "1回目",
+          "date": "2026-05-20",
+          "session_number": 1,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 1,
+          "label": "2回目",
+          "date": "2026-05-20",
+          "session_number": 2,
+          "status": "done",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 2,
+          "label": "3回目",
+          "date": "2026-05-31",
+          "session_number": 3,
+          "status": "scheduled",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 3,
+          "label": "4回目",
+          "date": null,
+          "session_number": 4,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 4,
+          "label": "5回目",
+          "date": null,
+          "session_number": 5,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 5,
+          "label": "6回目",
+          "date": null,
+          "session_number": 6,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 6,
+          "label": "7回目",
+          "date": null,
+          "session_number": 7,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 7,
+          "label": "8回目",
+          "date": null,
+          "session_number": 8,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        },
+        {
+          "slot": 8,
+          "label": "9回目",
+          "date": null,
+          "session_number": 9,
+          "status": "empty",
+          "adherence": null,
+          "likelihood": null,
+          "has_evaluation": false
+        }
+      ],
+      "scheduled_count": 3,
+      "evaluated_count": 0,
+      "overall_adherence": null,
+      "latest_evaluation": null,
+      "genre": null,
+      "attributes": {
+        "age": null,
+        "occupation": null,
+        "video_experience": null,
+        "has_pc": null,
+        "genre": null
+      },
+      "disposable_hours_week": null,
+      "time_used_hours_week": null,
+      "mg_support_notes": "",
+      "first_post": {
+        "status": "overdue",
+        "label": "30日超過・未投稿",
+        "days_to_deadline": -14,
+        "on_track": false,
+        "days_after_sp": 44
+      },
+      "time_quadrant": {
+        "label": "データ不足",
+        "color": "gray",
+        "hypotheses": [
+          "可処分時間または進捗データを入力してください"
+        ],
+        "key": "unknown"
+      },
+      "nine_grid": null,
+      "priority_flags": [
+        "初投稿30日",
+        "未分析"
+      ],
+      "needs_attention": true,
+      "lstep": {
+        "management_id": "435816660294",
+        "steps_completed": 9.0,
+        "latest_step": "9",
+        "latest_step_date": "2026-05-20",
+        "first_post_date": null,
+        "post_count": 0,
+        "program_start_date": null,
+        "imported_at": "2026-05-27T16:05:26"
+      }
+    }
+  ],
+  "sessions": [
+    {
+      "id": 1,
+      "student_id": "ルカ",
+      "mg_name": "小針",
+      "session_number": 1,
+      "session_date": "2026-04-28",
+      "sp_start_date": null,
+      "days_from_sp_start": 14,
+      "evaluated_at": "2026-05-26T00:00:00Z",
+      "evaluation_method": "manual_review",
+      "structure_adherence_rate": 0.868,
+      "script_delivery_likelihood": "high",
+      "missing_blocks": "",
+      "partial_blocks": "A1,A7,B1,B3,C2,C3,D5,D6,E1",
+      "structure_comment": "虎の巻の必須パートはおおむね伝わっており、パート丸ごとの欠落はない。一方で進行順が型と異なり（コーチング・ルールを自己紹介より先に実施）、顔出し環境依頼・質と量の整理・日報締切時刻などは薄い。",
+      "transcript_source": "user_pasted_transcript",
+      "result_json_path": "data/results/ルカ_1_manual.json",
+      "hearing": {
+        "family_structure": {
+          "value": "2026年2月結婚。北九州在住。旦那（パーソナルトレーナー・ジム経営）・ワンちゃん（ヨークシャテリア）と3人暮らし",
+          "confidence": "high"
+        },
+        "genre": {
+          "value": "ダイエット系（旦那トレーナー活用）。前撮り・結婚式コンテンツも検討",
+          "confidence": "high"
+        },
+        "age": {
+          "value": "27歳",
+          "confidence": "high"
+        },
+        "occupation": {
+          "value": "フリーランス動画編集（広島系エンタメ案件）。元保育士6年→キッズ体操教室約1年",
+          "confidence": "high"
+        },
+        "computer_literacy": {
+          "value": "YouTube長尺編集の実務経験あり（10分以上素材）。編集には慣れている",
+          "confidence": "high"
+        },
+        "session1_satisfaction": {
+          "value": "終盤「大丈夫そうです」—大きな不安の表明はなし",
+          "confidence": "medium"
+        },
+        "join_motivation": {
+          "value": "無料勉強会→環境で学びたい。直也さん（福岡カフェ）経由。月収80万・結婚式等の実現",
+          "confidence": "high"
+        },
+        "step_at_session": {
+          "value": "初投稿達成プログラム・プロフィール作成あたり（Step12前後）",
+          "confidence": "high"
+        },
+        "step_at_assign": {
+          "value": null,
+          "confidence": "not_mentioned"
+        },
+        "time_before_coach": {
+          "value": "YouTube編集・スポーツ教室で夜遅く、家事と両立が困難だった",
+          "confidence": "high"
+        },
+        "work_time_availability": {
+          "value": "フリーランスで日によるが、事前に枠を取れば調整可能",
+          "confidence": "medium"
+        },
+        "time_change_before_after": {
+          "value": null,
+          "confidence": "not_mentioned"
+        },
+        "step_progress_before_session": {
+          "value": "SP開始から約2週間でプロフィール設計まで進行、MGも進捗良好と評価",
+          "confidence": "medium"
+        },
+        "step_progress_after_session": {
+          "value": "今月：初投稿達成プログラム完了・初投稿1本・日報開始。来週までに週次行動表",
+          "confidence": "high"
+        }
+      },
+      "blocks": {
+        "A1": {
+          "status": "partial",
+          "evidence": "冒頭はメモ取りの説明から。伴走・味方は途中以降で明示。開始時の定型挨拶・「半年担当MG」宣言は弱い"
+        },
+        "A2": {
+          "status": "covered",
+          "evidence": "約1時間、コーチング説明→ルール→自己紹介→半年目標→日程調整の流れを説明"
+        },
+        "A3": {
+          "status": "covered",
+          "evidence": "小針綾乃、28歳、福島、マネージャー経歴・趣味など詳細に自己紹介"
+        },
+        "A4": {
+          "status": "covered",
+          "evidence": "名前・年齢・居住地・仕事をルカさんに聞く"
+        },
+        "A5": {
+          "status": "covered",
+          "evidence": "結婚・旦那・ワンちゃん、仕事変遷、夜遅い仕事からの転換など傾聴"
+        },
+        "A6": {
+          "status": "covered",
+          "evidence": "無料勉強会、直也さんアカウント、模索より環境で学びたい"
+        },
+        "A7": {
+          "status": "partial",
+          "evidence": "進捗が良い旨・クラチャ・Stepは触れるが「つまづきはあるか」の定型確認は薄い"
+        },
+        "B1": {
+          "status": "partial",
+          "evidence": "カウンセリング/ティーチング/コーチングの違い・ナビ比喩は丁寧。ただし「質=講師・量=MG」の一言整理はなし"
+        },
+        "B2": {
+          "status": "covered",
+          "evidence": "半年百投稿、初投稿30日以内、次10投稿、行動量の重要性"
+        },
+        "B3": {
+          "status": "partial",
+          "evidence": "味方・伴走・自責思考はある。自走・失敗OK・「見捨てない」系は誓約書・五つの共通点に分散"
+        },
+        "C1": {
+          "status": "covered",
+          "evidence": "11回、初月毎週→隔週→月1の説明"
+        },
+        "C2": {
+          "status": "partial",
+          "evidence": "15分無連絡で消化、前日21時変更、リスケ2回は説明。顔出し・静かな環境の依頼はなし"
+        },
+        "C3": {
+          "status": "partial",
+          "evidence": "日報・24時間返信は説明。スタンプ可の明示はなし"
+        },
+        "D1": {
+          "status": "covered",
+          "evidence": "月収80万、結婚式・マイホーム・旅行など夢を深掘り"
+        },
+        "D2": {
+          "status": "covered",
+          "evidence": "SP開始4/14、30日以内初投稿（5/14目安）"
+        },
+        "D3": {
+          "status": "covered",
+          "evidence": "ロードマップシートで収益・投稿・フォロワー目標を設定"
+        },
+        "D4": {
+          "status": "covered",
+          "evidence": "5月〜11月まで複数回の日程を確定"
+        },
+        "D5": {
+          "status": "partial",
+          "evidence": "今月のプログラム完了・初投稿目標は設定。週次行動表は来週に先送り"
+        },
+        "D6": {
+          "status": "partial",
+          "evidence": "日報テンプレ送付・朝提出依頼。具体的な締切時刻の合意はなし"
+        },
+        "E1": {
+          "status": "partial",
+          "evidence": "伴走への感謝・Discord連絡。虎の巻の力強い締め台詞は控えめ"
+        }
+      }
+    }
+  ]
+}

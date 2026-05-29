@@ -1,0 +1,11 @@
+venv/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+data/inbox/*
+data/transcripts/*
+data/logs/*
+!data/inbox/.gitkeep
+!data/transcripts/.gitkeep
+!data/logs/.gitkeep

@@ -1,0 +1,4 @@
+student_id,mg_name,session_number,session_date,sp_start_date,step_at_assign,step_at_session
+S001,山田,1,2026-01-15,2026-01-01,3,
+S002,佐藤,1,2026-01-20,2026-01-10,5,
+ルカ,小針,1,2026-04-28,2026-04-14,,12
