@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11月入会23名 — 月次投稿 vs 60/80/100投稿基準</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif; margin: 0; background: #f4f4f4; color: #222; }
+  header { background: #fff; border-bottom: 1px solid #ddd; padding: 18px 24px; }
+  header h1 { margin: 0 0 6px; font-size: 20px; }
+  header p { margin: 0; font-size: 13px; color: #555; line-height: 1.5; }
+  main { padding: 20px 24px 40px; max-width: 1400px; margin: 0 auto; }
+  section { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; }
+  h2 { margin: 0 0 14px; font-size: 16px; }
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 900px) { .charts { grid-template-columns: 1fr; } }
+  .chart-box { position: relative; height: 340px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: center; }
+  th { background: #eef2f7; font-weight: 600; }
+  td.name { text-align: left; white-space: nowrap; }
+  td.mg { text-align: left; font-size: 11px; color: #444; }
+  .ok { background: #e2efda; color: #1e5631; font-weight: 600; }
+  .warn { background: #fff2cc; color: #7f6000; }
+  .bad { background: #fce4d6; color: #833c0c; }
+  .na { color: #aaa; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  .card { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; }
+  .card .label { font-size: 11px; color: #666; }
+  .card .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .scroll { overflow-x: auto; }
+  .note { font-size: 12px; color: #666; line-height: 1.6; margin-top: 10px; }
+  .legend-inline { font-size: 12px; color: #555; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>11月入会卒業者23名 — 月次投稿ペース vs 60/80/100投稿基準</h1>
+  <p>
+    <strong>100投稿:</strong> 0→17→35→56→78→100 ／
+    <strong>80投稿:</strong> 0→13→27→44→62→80 ／
+    <strong>60投稿:</strong> 0→10→21→34→47→60
+    ／ データ: コミットプラン「新 月次投稿数」P列〜 ＋ 投稿数集計用2026年6月3日DL
+  </p>
+</header>
+<main>
+  <section id="summary-cards"></section>
+
+  <section>
+    <h2>コホート全体 — 基準値との比較（累計投稿数）</h2>
+    <div class="legend-inline">折れ線: 100基準（赤）／ 80基準（橙）／ 60基準（灰）／ 23名中央値（青）／ 23名平均（緑破線）</div>
+    <div class="charts">
+      <div class="chart-box"><canvas id="chartCumulative"></canvas></div>
+      <div class="chart-box"><canvas id="chartPct"></canvas></div>
+    </div>
+    <div class="scroll" style="margin-top:16px">
+      <table id="cohortTable">
+        <thead>
+          <tr>
+            <th>月</th><th>基準累計</th><th>データあり</th><th>基準達成人数</th><th>達成率</th>
+            <th>中央値</th><th>平均</th><th>中央値÷基準</th><th>平均÷基準</th><th>最小</th><th>最大</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>生徒別 — 月次累計と基準達成率（%）</h2>
+    <p class="note">セルは「累計（基準比%）」。100%以上=緑、50〜99%=黄、50%未満=赤。ー=未入力。</p>
+    <div class="scroll">
+      <table id="studentTable">
+        <thead>
+          <tr>
+            <th>生徒名</th><th>MG</th><th>卒業時</th>
+            <th>0ヶ月</th><th>1ヶ月</th><th>2ヶ月</th><th>3ヶ月</th><th>4ヶ月</th><th>5ヶ月</th><th>6ヶ月</th>
+            <th>5ヶ月時判定</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>上位5名の経過（累計投稿数）</h2>
+    <div class="chart-box" style="height:380px"><canvas id="chartTop5"></canvas></div>
+  </section>
+</main>
+<script>
+const DATA = {"stats": [{"month": 0, "label": "0ヶ月", "target": 0, "n": 8, "on_track": 8, "on_track_pct": 100.0, "median": 0.0, "mean": 0.9, "min": 0.0, "max": 6.0, "median_pct": 100, "mean_pct": 100}, {"month": 1, "label": "1ヶ月", "target": 17, "n": 15, "on_track": 2, "on_track_pct": 13.3, "median": 4.0, "mean": 6.8, "min": 0.0, "max": 20.0, "median_pct": 23.5, "mean_pct": 40.0}, {"month": 2, "label": "2ヶ月", "target": 35, "n": 19, "on_track": 2, "on_track_pct": 10.5, "median": 14.0, "mean": 16.7, "min": 0.0, "max": 39.0, "median_pct": 40.0, "mean_pct": 47.7}, {"month": 3, "label": "3ヶ月", "target": 56, "n": 22, "on_track": 1, "on_track_pct": 4.5, "median": 17.0, "mean": 24.2, "min": 1.0, "max": 65.0, "median_pct": 30.4, "mean_pct": 43.3}, {"month": 4, "label": "4ヶ月", "target": 78, "n": 21, "on_track": 1, "on_track_pct": 4.8, "median": 24.0, "mean": 33.0, "min": 1.0, "max": 90.0, "median_pct": 30.8, "mean_pct": 42.3}, {"month": 5, "label": "5ヶ月", "target": 100, "n": 15, "on_track": 0, "on_track_pct": 0.0, "median": 34.0, "mean": 49.2, "min": 1.0, "max": 97.0, "median_pct": 34.0, "mean_pct": 49.2}, {"month": 6, "label": "6ヶ月", "target": 100, "n": 11, "on_track": 2, "on_track_pct": 18.2, "median": 74.0, "mean": 69.4, "min": 30.0, "max": 122.0, "median_pct": 74.0, "mean_pct": 69.4}], "students": [{"name": "みやけかなえ", "mg": "森本風花", "grad": 122, "grad_pct100": 122.0, "months": [{"cum": 0, "monthly": 0, "target": 0, "pct": null}, {"cum": 7, "monthly": 7, "target": 17, "pct": 41.2}, {"cum": 37, "monthly": 30, "target": 35, "pct": 105.7}, {"cum": 65, "monthly": 28, "target": 56, "pct": 116.1}, {"cum": 90, "monthly": 25, "target": 78, "pct": 115.4}, {"cum": 97, "monthly": 7, "target": 100, "pct": 97.0}, {"cum": 122, "monthly": 25, "target": 100, "pct": 122.0}], "m5_pct": 122.0, "pace": "やや遅れ"}, {"name": "くまもとゆき", "mg": "藤井里果", "grad": 104, "grad_pct100": 104.0, "months": [{"cum": 1, "monthly": 1, "target": 0, "pct": null}, {"cum": 20, "monthly": 19, "target": 17, "pct": 117.6}, {"cum": 39, "monthly": 19, "target": 35, "pct": 111.4}, {"cum": 49, "monthly": 10, "target": 56, "pct": 87.5}, {"cum": 59, "monthly": 10, "target": 78, "pct": 75.6}, {"cum": 89, "monthly": 30, "target": 100, "pct": 89.0}, {"cum": 104, "monthly": 15, "target": 100, "pct": 104.0}], "m5_pct": 104.0, "pace": "やや遅れ"}, {"name": "うちだちひろ", "mg": "森本風花", "grad": 92, "grad_pct100": 92.0, "months": [{"cum": 0, "monthly": 0, "target": 0, "pct": null}, {"cum": 3, "monthly": 3, "target": 17, "pct": 17.6}, {"cum": 28, "monthly": 25, "target": 35, "pct": 80.0}, {"cum": 54, "monthly": 26, "target": 56, "pct": 96.4}, {"cum": 75, "monthly": 21, "target": 78, "pct": 96.2}, {"cum": 81, "monthly": 6, "target": 100, "pct": 81.0}, {"cum": 92, "monthly": 11, "target": 100, "pct": 92.0}], "m5_pct": 92.0, "pace": "やや遅れ"}, {"name": "はなださなえ", "mg": "八木秋歩", "grad": 75, "grad_pct100": 75.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": 6, "monthly": 6, "target": 17, "pct": 35.3}, {"cum": 32, "monthly": 26, "target": 35, "pct": 91.4}, {"cum": 47, "monthly": 15, "target": 56, "pct": 83.9}, {"cum": 62, "monthly": 15, "target": 78, "pct": 79.5}, {"cum": 75, "monthly": 13, "target": 100, "pct": 75.0}, {"cum": 88, "monthly": 13, "target": 100, "pct": 88.0}], "m5_pct": 88.0, "pace": "遅れ"}, {"name": "きくちやすと", "mg": "須見浩人", "grad": 74, "grad_pct100": 74.0, "months": [{"cum": 0, "monthly": 0, "target": 0, "pct": null}, {"cum": 1, "monthly": 1, "target": 17, "pct": 5.9}, {"cum": 15, "monthly": 14, "target": 35, "pct": 42.9}, {"cum": 34, "monthly": 19, "target": 56, "pct": 60.7}, {"cum": 49, "monthly": 15, "target": 78, "pct": 62.8}, {"cum": 60, "monthly": 11, "target": 100, "pct": 60.0}, {"cum": 74, "monthly": 14, "target": 100, "pct": 74.0}], "m5_pct": 74.0, "pace": "遅れ"}, {"name": "わたなべ ゆい", "mg": "今立なつみ", "grad": 74, "grad_pct100": 74.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": 9, "monthly": 9, "target": 17, "pct": 52.9}, {"cum": 18, "monthly": 9, "target": 35, "pct": 51.4}, {"cum": 36, "monthly": 18, "target": 56, "pct": 64.3}, {"cum": 46, "monthly": 10, "target": 78, "pct": 59.0}, {"cum": 63, "monthly": 17, "target": 100, "pct": 63.0}, {"cum": 74, "monthly": 11, "target": 100, "pct": 74.0}], "m5_pct": 74.0, "pace": "遅れ"}, {"name": "なめかわあき", "mg": "高橋友希", "grad": 53, "grad_pct100": 53.0, "months": [{"cum": 0, "monthly": 0, "target": 0, "pct": null}, {"cum": 11, "monthly": 11, "target": 17, "pct": 64.7}, {"cum": 25, "monthly": 14, "target": 35, "pct": 71.4}, {"cum": 35, "monthly": 10, "target": 56, "pct": 62.5}, {"cum": 44, "monthly": 9, "target": 78, "pct": 56.4}, {"cum": 53, "monthly": 9, "target": 100, "pct": 53.0}, {"cum": 56, "monthly": 3, "target": 100, "pct": 56.0}], "m5_pct": 56.0, "pace": "遅れ"}, {"name": "かしわぎはるか", "mg": "小林彩織", "grad": 51, "grad_pct100": 51.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": 14, "monthly": 14, "target": 17, "pct": 82.4}, {"cum": 34, "monthly": 20, "target": 35, "pct": 97.1}, {"cum": 51, "monthly": 17, "target": 56, "pct": 91.1}, {"cum": null, "monthly": null, "target": 78, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": null, "pace": "データなし"}, {"name": "ひがしのゆう", "mg": "今立なつみ", "grad": 43, "grad_pct100": 43.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": null, "monthly": null, "target": 17, "pct": null}, {"cum": null, "monthly": null, "target": 35, "pct": null}, {"cum": 2, "monthly": 2, "target": 56, "pct": 3.6}, {"cum": 21, "monthly": 19, "target": 78, "pct": 26.9}, {"cum": 33, "monthly": 12, "target": 100, "pct": 33.0}, {"cum": 43, "monthly": 10, "target": 100, "pct": 43.0}], "m5_pct": 43.0, "pace": "大幅遅れ"}, {"name": "おざわゆきこ", "mg": "森本風花", "grad": 42, "grad_pct100": 42.0, "months": [{"cum": 0, "monthly": 0, "target": 0, "pct": null}, {"cum": 0, "monthly": 0, "target": 17, "pct": 0.0}, {"cum": 2, "monthly": 2, "target": 35, "pct": 5.7}, {"cum": 4, "monthly": 2, "target": 56, "pct": 7.1}, {"cum": 19, "monthly": 15, "target": 78, "pct": 24.4}, {"cum": 31, "monthly": 12, "target": 100, "pct": 31.0}, {"cum": 42, "monthly": 11, "target": 100, "pct": 42.0}], "m5_pct": 42.0, "pace": "大幅遅れ"}, {"name": "にしぐちいくこ", "mg": "原千佳", "grad": 42, "grad_pct100": 42.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": 4, "monthly": 4, "target": 17, "pct": 23.5}, {"cum": 14, "monthly": 10, "target": 35, "pct": 40.0}, {"cum": 28, "monthly": 14, "target": 56, "pct": 50.0}, {"cum": 42, "monthly": 14, "target": 78, "pct": 53.8}, {"cum": null, "monthly": null, "target": 100, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": null, "pace": "データなし"}, {"name": "ふじいゆうこ", "mg": "森淳子", "grad": 34, "grad_pct100": 34.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": null, "monthly": null, "target": 17, "pct": null}, {"cum": null, "monthly": null, "target": 35, "pct": null}, {"cum": 10, "monthly": 10, "target": 56, "pct": 17.9}, {"cum": 23, "monthly": 13, "target": 78, "pct": 29.5}, {"cum": 34, "monthly": 11, "target": 100, "pct": 34.0}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": 34.0, "pace": "大幅遅れ"}, {"name": "いとうきよと", "mg": "中富智弘", "grad": 34, "grad_pct100": 34.0, "months": [{"cum": 6, "monthly": 6, "target": 0, "pct": null}, {"cum": 18, "monthly": 12, "target": 17, "pct": 105.9}, {"cum": 29, "monthly": 11, "target": 35, "pct": 82.9}, {"cum": 30, "monthly": 1, "target": 56, "pct": 53.6}, {"cum": 32, "monthly": 2, "target": 78, "pct": 41.0}, {"cum": 34, "monthly": 2, "target": 100, "pct": 34.0}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": 34.0, "pace": "大幅遅れ"}, {"name": "すぎたにまどか", "mg": "太田有紀", "grad": 32, "grad_pct100": 32.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": 4, "monthly": 4, "target": 17, "pct": 23.5}, {"cum": 6, "monthly": 2, "target": 35, "pct": 17.1}, {"cum": 15, "monthly": 9, "target": 56, "pct": 26.8}, {"cum": 24, "monthly": 9, "target": 78, "pct": 30.8}, {"cum": 32, "monthly": 8, "target": 100, "pct": 32.0}, {"cum": 38, "monthly": 6, "target": 100, "pct": 38.0}], "m5_pct": 38.0, "pace": "大幅遅れ"}, {"name": "とりばえみこ", "mg": "鈴木久美子", "grad": 30, "grad_pct100": 30.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": null, "monthly": null, "target": 17, "pct": null}, {"cum": 7, "monthly": 7, "target": 35, "pct": 20.0}, {"cum": 17, "monthly": 10, "target": 56, "pct": 30.4}, {"cum": 22, "monthly": 5, "target": 78, "pct": 28.2}, {"cum": 28, "monthly": 6, "target": 100, "pct": 28.0}, {"cum": 30, "monthly": 2, "target": 100, "pct": 30.0}], "m5_pct": 30.0, "pace": "大幅遅れ"}, {"name": "しばやまみか", "mg": "青木千奈", "grad": 27, "grad_pct100": 27.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": 4, "monthly": 4, "target": 17, "pct": 23.5}, {"cum": 11, "monthly": 7, "target": 35, "pct": 31.4}, {"cum": 13, "monthly": 2, "target": 56, "pct": 23.2}, {"cum": 20, "monthly": 7, "target": 78, "pct": 25.6}, {"cum": 27, "monthly": 7, "target": 100, "pct": 27.0}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": 27.0, "pace": "大幅遅れ"}, {"name": "たしろゆみこ", "mg": "高木千鶴", "grad": 25, "grad_pct100": 25.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": 1, "monthly": 1, "target": 17, "pct": 5.9}, {"cum": 8, "monthly": 7, "target": 35, "pct": 22.9}, {"cum": 16, "monthly": 8, "target": 56, "pct": 28.6}, {"cum": 25, "monthly": 9, "target": 78, "pct": 32.1}, {"cum": null, "monthly": null, "target": 100, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": null, "pace": "データなし"}, {"name": "かつおかのどか", "mg": "宮田友理", "grad": 20, "grad_pct100": 20.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": null, "monthly": null, "target": 17, "pct": null}, {"cum": 10, "monthly": 10, "target": 35, "pct": 28.6}, {"cum": 17, "monthly": 7, "target": 56, "pct": 30.4}, {"cum": 20, "monthly": 3, "target": 78, "pct": 25.6}, {"cum": null, "monthly": null, "target": 100, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": null, "pace": "データなし"}, {"name": "おのさとこ", "mg": "青木千奈", "grad": 15, "grad_pct100": 15.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": null, "monthly": null, "target": 17, "pct": null}, {"cum": 1, "monthly": 1, "target": 35, "pct": 2.9}, {"cum": 7, "monthly": 6, "target": 56, "pct": 12.5}, {"cum": 15, "monthly": 8, "target": 78, "pct": 19.2}, {"cum": null, "monthly": null, "target": 100, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": null, "pace": "データなし"}, {"name": "いしがきゆか", "mg": "本田亜莉沙", "grad": 3, "grad_pct100": 3.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": null, "monthly": null, "target": 17, "pct": null}, {"cum": null, "monthly": null, "target": 35, "pct": null}, {"cum": 1, "monthly": 1, "target": 56, "pct": 1.8}, {"cum": 3, "monthly": 2, "target": 78, "pct": 3.8}, {"cum": null, "monthly": null, "target": 100, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": null, "pace": "データなし"}, {"name": "たけかたりゅうすけ", "mg": "長澤郁子", "grad": 1, "grad_pct100": 1.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": null, "monthly": null, "target": 17, "pct": null}, {"cum": 1, "monthly": 1, "target": 35, "pct": 2.9}, {"cum": 1, "monthly": 0, "target": 56, "pct": 1.8}, {"cum": 1, "monthly": 0, "target": 78, "pct": 1.3}, {"cum": null, "monthly": null, "target": 100, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": null, "pace": "データなし"}, {"name": "きくちたまみ", "mg": "木村友紀", "grad": 1, "grad_pct100": 1.0, "months": [{"cum": 0, "monthly": 0, "target": 0, "pct": null}, {"cum": 0, "monthly": 0, "target": 17, "pct": 0.0}, {"cum": 0, "monthly": 0, "target": 35, "pct": 0.0}, {"cum": 1, "monthly": 1, "target": 56, "pct": 1.8}, {"cum": 1, "monthly": 0, "target": 78, "pct": 1.3}, {"cum": 1, "monthly": 0, "target": 100, "pct": 1.0}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": 1.0, "pace": "大幅遅れ"}, {"name": "かくたにたかまさ", "mg": "福田康裕", "grad": 0, "grad_pct100": 0.0, "months": [{"cum": null, "monthly": null, "target": 0, "pct": null}, {"cum": null, "monthly": null, "target": 17, "pct": null}, {"cum": null, "monthly": null, "target": 35, "pct": null}, {"cum": null, "monthly": null, "target": 56, "pct": null}, {"cum": null, "monthly": null, "target": 78, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}, {"cum": null, "monthly": null, "target": 100, "pct": null}], "m5_pct": null, "pace": "データなし"}], "bench_cum": [0, 17, 35, 56, 78, 100], "bench_80_cum": [0, 13, 27, 44, 62, 80], "bench_60_cum": [0, 10, 21, 34, 47, 60]};
+
+function cellClass(pct) {
+  if (pct == null) return 'na';
+  if (pct >= 100) return 'ok';
+  if (pct >= 50) return 'warn';
+  return 'bad';
+}
+
+function fmtCell(m) {
+  if (m.cum == null) return '<span class="na">—</span>';
+  const pct = m.pct != null ? m.pct + '%' : '—';
+  return `${m.cum}<br><small>(${pct})</small>`;
+}
+
+// Summary cards
+const grads = DATA.students.map(s => s.grad);
+const avgGrad = (grads.reduce((a,b)=>a+b,0)/grads.length).toFixed(1);
+const medGrad = [...grads].sort((a,b)=>a-b)[Math.floor(grads.length/2)];
+const over100 = grads.filter(g=>g>=100).length;
+document.getElementById('summary-cards').innerHTML = `
+  <h2>サマリー</h2>
+  <div class="summary-grid">
+    <div class="card"><div class="label">対象人数</div><div class="value">23名</div></div>
+    <div class="card"><div class="label">卒業時平均投稿数</div><div class="value">${avgGrad}本</div></div>
+    <div class="card"><div class="label">卒業時中央値</div><div class="value">${medGrad}本</div></div>
+    <div class="card"><div class="label">100投稿以上</div><div class="value">${over100}名</div></div>
+  </div>`;
+
+// Cohort table
+const tbody = document.querySelector('#cohortTable tbody');
+DATA.stats.forEach(s => {
+  if (s.n === 0) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td>${s.label}</td><td>${s.target}</td><td>${s.n}</td>
+    <td>${s.on_track}</td><td>${s.on_track_pct}%</td>
+    <td>${s.median}</td><td>${s.mean}</td>
+    <td class="${cellClass(s.median_pct)}">${s.median_pct}%</td>
+    <td class="${cellClass(s.mean_pct)}">${s.mean_pct}%</td>
+    <td>${s.min}</td><td>${s.max}</td>`;
+  tbody.appendChild(tr);
+});
+
+// Student table
+const stbody = document.querySelector('#studentTable tbody');
+DATA.students.forEach(s => {
+  const tr = document.createElement('tr');
+  const cells = s.months.map(m => {
+    const cls = m.cum == null ? 'na' : cellClass(m.pct);
+    return `<td class="${cls}">${fmtCell(m)}</td>`;
+  }).join('');
+  tr.innerHTML = `
+    <td class="name">${s.name}</td>
+    <td class="mg">${s.mg}</td>
+    <td><strong>${s.grad}</strong><br><small>(${s.grad_pct100}%)</small></td>
+    ${cells}
+    <td>${s.pace}</td>`;
+  stbody.appendChild(tr);
+});
+
+const statsWithData = DATA.stats.filter(s => s.n > 0);
+const labels = statsWithData.map(s => s.label);
+const medians = statsWithData.map(s => s.median);
+const means = statsWithData.map(s => s.mean);
+
+function benchSeries(bench) {
+  return statsWithData.map(s => bench[s.month] != null ? bench[s.month] : bench[bench.length - 1]);
+}
+
+function medianPctSeries(bench) {
+  return statsWithData.map(s => {
+    const tgt = bench[s.month] != null ? bench[s.month] : bench[bench.length - 1];
+    return tgt > 0 ? Math.round(s.median / tgt * 1000) / 10 : 100;
+  });
+}
+
+const bench100 = benchSeries(DATA.bench_cum);
+const bench80 = benchSeries(DATA.bench_80_cum);
+const bench60 = benchSeries(DATA.bench_60_cum);
+
+const commonOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } },
+};
+
+const benchLine = (label, data, color, width = 2, dash = []) => ({
+  label, data, borderColor: color, backgroundColor: color,
+  borderWidth: width, borderDash: dash, pointRadius: 3, tension: 0.1, fill: false,
+});
+
+new Chart(document.getElementById('chartCumulative'), {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      benchLine('100投稿基準', bench100, '#c0392b', 2.5),
+      benchLine('80投稿基準', bench80, '#e67e22', 2, [4, 3]),
+      benchLine('60投稿基準', bench60, '#7f8c8d', 2, [4, 3]),
+      benchLine('23名 中央値', medians, '#2471a3', 2.5),
+      benchLine('23名 平均', means, '#1e8449', 2, [5, 4]),
+    ]
+  },
+  options: { ...commonOpts, scales: { y: { title: { display: true, text: '累計投稿数（本）' } }, x: { title: { display: true, text: 'SP開始からの経過月' } } } }
+});
+
+new Chart(document.getElementById('chartPct'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [
+      { label: '中央値 ÷ 100基準', data: medianPctSeries(DATA.bench_cum), backgroundColor: '#c0392b' },
+      { label: '中央値 ÷ 80基準', data: medianPctSeries(DATA.bench_80_cum), backgroundColor: '#e67e22' },
+      { label: '中央値 ÷ 60基準', data: medianPctSeries(DATA.bench_60_cum), backgroundColor: '#7f8c8d' },
+    ]
+  },
+  options: {
+    ...commonOpts,
+    scales: {
+      y: { title: { display: true, text: '基準達成率（%）' }, suggestedMax: 120, ticks: { callback: v => v+'%' } },
+      x: { title: { display: true, text: '経過月' } }
+    }
+  }
+});
+
+// Top 5 chart
+const top5 = DATA.students.slice(0, 5);
+const monthLabels = ['0ヶ月','1ヶ月','2ヶ月','3ヶ月','4ヶ月','5ヶ月','6ヶ月'];
+const colors = ['#2471a3','#1e8449','#8e44ad','#d35400','#16a085'];
+const topDatasets = top5.map((s,i) => ({
+  label: s.name + ' (' + s.grad + '本)',
+  data: s.months.map(m => m.cum),
+  borderColor: colors[i],
+  backgroundColor: colors[i],
+  spanGaps: false,
+  tension: 0.15,
+  pointRadius: 3,
+}));
+const benchFull = (bench, finalVal) => bench.concat([finalVal != null ? finalVal : bench[bench.length - 1]]);
+[
+  { label: '100投稿基準', data: benchFull(DATA.bench_cum, 100), color: '#c0392b' },
+  { label: '80投稿基準', data: benchFull(DATA.bench_80_cum, 80), color: '#e67e22' },
+  { label: '60投稿基準', data: benchFull(DATA.bench_60_cum, 60), color: '#7f8c8d' },
+].forEach(b => topDatasets.unshift({
+  label: b.label,
+  data: b.data,
+  borderColor: b.color,
+  borderWidth: 2,
+  borderDash: [6, 4],
+  pointRadius: 0,
+  tension: 0,
+}));
+
+new Chart(document.getElementById('chartTop5'), {
+  type: 'line',
+  data: { labels: monthLabels, datasets: topDatasets },
+  options: { ...commonOpts, scales: { y: { title: { display: true, text: '累計投稿数（本）' } }, x: { title: { display: true, text: '経過月' } } } }
+});
+</script>
+</body>
+</html>

@@ -13,6 +13,7 @@ DASHBOARD_DIR = ROOT / "dashboard"
 ROSTER_PATH = ROOT / "data" / "metadata" / "roster_paste.tsv"
 PROFILES_PATH = ROOT / "data" / "metadata" / "student_profiles.csv"
 LSTEP_PATH = ROOT / "data" / "metadata" / "lstep_progress.csv"
+SP_START_PATH = ROOT / "data" / "metadata" / "sp_start_dates.tsv"
 
 import sys
 
@@ -26,6 +27,7 @@ from student_insights import (  # noqa: E402
     priority_flags,
     time_progress_quadrant,
 )
+from sp_start_lookup import load_sp_start_index, lookup_sp_start  # noqa: E402
 
 BLOCK_LABELS = {
     "A1": "挨拶・役割", "A2": "本日の流れ", "A3": "MG自己紹介", "A4": "生徒自己紹介",
@@ -155,9 +157,14 @@ def enrich_student(
     sp_start = (
         student.get("sp_start_date")
         or (p.get("sp_start_date") or "").strip()
-        or (ls.get("sp_start_lstep") or "").strip()
         or None
     )
+    if not sp_start:
+        manual = lookup_sp_start(student.get("student_name") or "", None)
+        if manual:
+            sp_start = manual.isoformat()
+    if not sp_start:
+        sp_start = (ls.get("sp_start_lstep") or "").strip() or None
     if sp_start == "":
         sp_start = None
     if sp_start and not student.get("sp_start_date"):

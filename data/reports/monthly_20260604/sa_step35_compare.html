@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>仮説A: STEP3-5 × 自己分析（2026年4月入会・新特進）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif; margin: 0; background: #f4f4f4; color: #222; }
+  header { background: #fff; border-bottom: 1px solid #ddd; padding: 18px 24px; }
+  header h1 { margin: 0 0 6px; font-size: 20px; }
+  header p { margin: 0; font-size: 13px; color: #555; line-height: 1.6; }
+  main { padding: 20px 24px 40px; max-width: 1200px; margin: 0 auto; }
+  section { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; }
+  h2 { margin: 0 0 8px; font-size: 16px; }
+  .note { font-size: 12px; color: #666; line-height: 1.6; margin: 0 0 14px; }
+  .alert { background: #fff8e1; border: 1px solid #f0c040; border-radius: 6px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 800px) { .cards { grid-template-columns: 1fr 1fr; } }
+  .card { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; }
+  .card .label { font-size: 11px; color: #666; }
+  .card .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 900px) { .charts { grid-template-columns: 1fr; } }
+  .chart-box { position: relative; height: 320px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: center; }
+  th { background: #eef2f7; }
+  td.name { text-align: left; white-space: nowrap; }
+  .g-sa7 { background: #e2efda; }
+  .g-sa814 { background: #fff2cc; }
+  .g-sa15p { background: #fce4d6; }
+  .g-none { background: #f2f2f2; }
+  .yes { color: #1e5631; font-weight: 600; }
+  .no { color: #833c0c; }
+</style>
+</head>
+<body>
+<header>
+  <h1>仮説A: STEP3-5 × 自己分析（2026年4月入会・新特進）</h1>
+  <p>集計基準日: 2026-06-04 ／ 母数: SP+30日経過 39名 ／ SA受講済 39名 / SA未受講 0名 ／ データ: コミットプラン (9).xlsx + lstep_tokushin_userpaste.tsv</p>
+</header>
+<main>
+  <section id="alert-box"></section>
+  <section>
+    <h2>サマリ</h2>
+    <div class="cards" id="summary-cards"></div>
+  </section>
+  <section>
+    <h2>① SA受講済 vs 未受講（母数比較）</h2>
+    <p class="note">自己分析セッション実施日が集計基準日以前 = 受講済。コミットプラン自己分析列（W列）を参照。</p>
+    <div class="charts">
+      <div class="chart-box"><canvas id="chartSaDoneRate"></canvas></div>
+      <div class="chart-box"><canvas id="chartSaDoneDays"></canvas></div>
+    </div>
+  </section>
+  <section>
+    <h2>② SAタイミング別（4月コホート内の実質比較）</h2>
+    <p class="note">全員SA受講済のため、<strong>SP開始→自己分析までの日数（SA gap）</strong>で3群に分割。STEP3-5到達率の差が最も大きい。</p>
+    <div class="charts">
+      <div class="chart-box"><canvas id="chartTimingRate"></canvas></div>
+      <div class="chart-box"><canvas id="chartTimingDays"></canvas></div>
+    </div>
+  </section>
+  <section>
+    <h2>生徒一覧</h2>
+    <div style="overflow-x:auto"><table id="studentTable"><thead>
+      <tr><th>生徒名</th><th>SA gap</th><th>グループ</th><th>STEP3</th><th>STEP5</th><th>現在STEP</th><th>SP→STEP5</th><th>STEP3→5</th></tr>
+    </thead><tbody></tbody></table></div>
+  </section>
+</main>
+<script>
+const DATA = {"snapshot": "2026-06-04", "total": 39, "sa_yes": {"n": 39, "r3_pct": 79.5, "r5_pct": 79.5, "step_med": 14, "sp_s3_med": 3, "sp_s5_med": 8, "s3_s5_med": 4}, "sa_no": {"n": 0, "r3_pct": null, "r5_pct": null, "step_med": null, "sp_s3_med": null, "sp_s5_med": null, "s3_s5_med": null}, "sa7": {"n": 27, "r3_pct": 96.3, "r5_pct": 96.3, "step_med": 16, "sp_s3_med": 2.5, "sp_s5_med": 8.0, "s3_s5_med": 3.0}, "sa814": {"n": 4, "r3_pct": 100.0, "r5_pct": 100.0, "step_med": 15.0, "sp_s3_med": 3.5, "sp_s5_med": 8.0, "s3_s5_med": 4.5}, "sa15p": {"n": 8, "r3_pct": 12.5, "r5_pct": 12.5, "step_med": 0.0, "sp_s3_med": 7, "sp_s5_med": 23, "s3_s5_med": 16}, "students": [{"name": "ほりかわ　てつじ", "sa_received": true, "bucket": "sa15p", "sa_gap": 20, "step": 0, "reached3": false, "reached5": false, "sp_s3": null, "sp_s5": null, "s3_s5": null}, {"name": "わたなべあき", "sa_received": true, "bucket": "sa15p", "sa_gap": 19, "step": 0, "reached3": false, "reached5": false, "sp_s3": null, "sp_s5": null, "s3_s5": null}, {"name": "あんどうしょうこ", "sa_received": true, "bucket": "sa15p", "sa_gap": 26, "step": 0, "reached3": false, "reached5": false, "sp_s3": null, "sp_s5": null, "s3_s5": null}, {"name": "いまおか　あい", "sa_received": true, "bucket": "sa15p", "sa_gap": 23, "step": 0, "reached3": false, "reached5": false, "sp_s3": null, "sp_s5": null, "s3_s5": null}, {"name": "むらたけいこ", "sa_received": true, "bucket": "sa15p", "sa_gap": 22, "step": 0, "reached3": false, "reached5": false, "sp_s3": null, "sp_s5": null, "s3_s5": null}, {"name": "さいとうなつみ", "sa_received": true, "bucket": "sa7", "sa_gap": -2, "step": 9, "reached3": true, "reached5": true, "sp_s3": 11, "sp_s5": 11, "s3_s5": 0}, {"name": "こいでるか", "sa_received": true, "bucket": "sa7", "sa_gap": -2, "step": 19, "reached3": true, "reached5": true, "sp_s3": -2, "sp_s5": 0, "s3_s5": 2}, {"name": "なんばあんに", "sa_received": true, "bucket": "sa7", "sa_gap": 1, "step": 0, "reached3": false, "reached5": false, "sp_s3": null, "sp_s5": null, "s3_s5": null}, {"name": "おかもとまこ", "sa_received": true, "bucket": "sa7", "sa_gap": 3, "step": 19, "reached3": true, "reached5": true, "sp_s3": 1, "sp_s5": 7, "s3_s5": 6}, {"name": "せとすずか", "sa_received": true, "bucket": "sa7", "sa_gap": 1, "step": 16, "reached3": true, "reached5": true, "sp_s3": 1, "sp_s5": 4, "s3_s5": 3}, {"name": "はなもとけいこ", "sa_received": true, "bucket": "sa7", "sa_gap": 2, "step": 13, "reached3": true, "reached5": true, "sp_s3": 2, "sp_s5": 11, "s3_s5": 9}, {"name": "さかもとななえ", "sa_received": true, "bucket": "sa7", "sa_gap": 1, "step": 19, "reached3": true, "reached5": true, "sp_s3": 2, "sp_s5": 6, "s3_s5": 4}, {"name": "くろこなおき", "sa_received": true, "bucket": "sa7", "sa_gap": 3, "step": 15, "reached3": true, "reached5": true, "sp_s3": 4, "sp_s5": 6, "s3_s5": 2}, {"name": "なかむらほのか", "sa_received": true, "bucket": "sa814", "sa_gap": 9, "step": 17, "reached3": true, "reached5": true, "sp_s3": 3, "sp_s5": 8, "s3_s5": 5}, {"name": "たけだみえこ", "sa_received": true, "bucket": "sa7", "sa_gap": 0, "step": 18, "reached3": true, "reached5": true, "sp_s3": 1, "sp_s5": 16, "s3_s5": 15}, {"name": "いのうえなおこ", "sa_received": true, "bucket": "sa7", "sa_gap": 0, "step": 13, "reached3": true, "reached5": true, "sp_s3": 1, "sp_s5": 3, "s3_s5": 2}, {"name": "こみやみゆき", "sa_received": true, "bucket": "sa7", "sa_gap": 2, "step": 17, "reached3": true, "reached5": true, "sp_s3": 2, "sp_s5": 8, "s3_s5": 6}, {"name": "さとうなおみ", "sa_received": true, "bucket": "sa814", "sa_gap": 8, "step": 9, "reached3": true, "reached5": true, "sp_s3": 1, "sp_s5": 5, "s3_s5": 4}, {"name": "くぼたまきこ", "sa_received": true, "bucket": "sa7", "sa_gap": 1, "step": 14, "reached3": true, "reached5": true, "sp_s3": 6, "sp_s5": 11, "s3_s5": 5}, {"name": "すがさわだいすけ", "sa_received": true, "bucket": "sa7", "sa_gap": 0, "step": 17, "reached3": true, "reached5": true, "sp_s3": 2, "sp_s5": 5, "s3_s5": 3}, {"name": "のづじゅん", "sa_received": true, "bucket": "sa7", "sa_gap": 6, "step": 16, "reached3": true, "reached5": true, "sp_s3": 5, "sp_s5": 8, "s3_s5": 3}, {"name": "ふくだえりな", "sa_received": true, "bucket": "sa7", "sa_gap": 4, "step": 11, "reached3": true, "reached5": true, "sp_s3": 1, "sp_s5": 4, "s3_s5": 3}, {"name": "いいじまいつき", "sa_received": true, "bucket": "sa7", "sa_gap": 1, "step": 19, "reached3": true, "reached5": true, "sp_s3": 4, "sp_s5": 6, "s3_s5": 2}, {"name": "おかむらたかこ", "sa_received": true, "bucket": "sa7", "sa_gap": -1, "step": 14, "reached3": true, "reached5": true, "sp_s3": 10, "sp_s5": 12, "s3_s5": 2}, {"name": "むなかたさよ", "sa_received": true, "bucket": "sa7", "sa_gap": 4, "step": 9, "reached3": true, "reached5": true, "sp_s3": 5, "sp_s5": 18, "s3_s5": 13}, {"name": "わたなべありさ", "sa_received": true, "bucket": "sa7", "sa_gap": 5, "step": 19, "reached3": true, "reached5": true, "sp_s3": 3, "sp_s5": 6, "s3_s5": 3}, {"name": "すぎやまももこ", "sa_received": true, "bucket": "sa7", "sa_gap": 0, "step": 19, "reached3": true, "reached5": true, "sp_s3": 1, "sp_s5": 2, "s3_s5": 1}, {"name": "たかはしみか", "sa_received": true, "bucket": "sa7", "sa_gap": 6, "step": 19, "reached3": true, "reached5": true, "sp_s3": 6, "sp_s5": 8, "s3_s5": 2}, {"name": "さとうたいき", "sa_received": true, "bucket": "sa7", "sa_gap": 0, "step": 17, "reached3": true, "reached5": true, "sp_s3": -2, "sp_s5": 0, "s3_s5": 2}, {"name": "さしわともこ", "sa_received": true, "bucket": "sa7", "sa_gap": 2, "step": 11, "reached3": true, "reached5": true, "sp_s3": 6, "sp_s5": 22, "s3_s5": 16}, {"name": "ひらいでちえこ", "sa_received": true, "bucket": "sa7", "sa_gap": 6, "step": 14, "reached3": true, "reached5": true, "sp_s3": 11, "sp_s5": 18, "s3_s5": 7}, {"name": "かわさきたかひろ", "sa_received": true, "bucket": "sa7", "sa_gap": 0, "step": 11, "reached3": true, "reached5": true, "sp_s3": 13, "sp_s5": 26, "s3_s5": 13}, {"name": "くりはらあきこ（ごうだいあきこ）", "sa_received": true, "bucket": "sa7", "sa_gap": 1, "step": 17, "reached3": true, "reached5": true, "sp_s3": 8, "sp_s5": 14, "s3_s5": 6}, {"name": "いわさきじゅんこ", "sa_received": true, "bucket": "sa7", "sa_gap": 2, "step": 15, "reached3": true, "reached5": true, "sp_s3": 1, "sp_s5": 8, "s3_s5": 7}, {"name": "すながわえみこ", "sa_received": true, "bucket": "sa814", "sa_gap": 12, "step": 14, "reached3": true, "reached5": true, "sp_s3": 7, "sp_s5": 13, "s3_s5": 6}, {"name": "ななみみほ", "sa_received": true, "bucket": "sa814", "sa_gap": 11, "step": 16, "reached3": true, "reached5": true, "sp_s3": 4, "sp_s5": 8, "s3_s5": 4}, {"name": "かたひらゆみ", "sa_received": true, "bucket": "sa15p", "sa_gap": 31, "step": 9, "reached3": true, "reached5": true, "sp_s3": 7, "sp_s5": 23, "s3_s5": 16}, {"name": "せきさちよ", "sa_received": true, "bucket": "sa15p", "sa_gap": 27, "step": 0, "reached3": false, "reached5": false, "sp_s3": null, "sp_s5": null, "s3_s5": null}, {"name": "原島勇人（はらしまはやと）", "sa_received": true, "bucket": "sa15p", "sa_gap": 18, "step": 0, "reached3": false, "reached5": false, "sp_s3": null, "sp_s5": null, "s3_s5": null}]};
+
+function fmt(v, suffix='') {
+  if (v == null || v === '') return '—';
+  return v + suffix;
+}
+
+function renderAlert() {
+  const no = DATA.sa_no.n;
+  const el = document.getElementById('alert-box');
+  if (no === 0) {
+    el.innerHTML = '<div class="alert"><strong>注意:</strong> 4月入会・SP+30日コホート（' + DATA.total + '名）は<strong>全員自己分析セッション受講済</strong>（SA未受講 0名）です。'
+      + '「受講済 vs 未受講」の母数比較はこのコホートではできないため、下段の<strong>SAタイミング別（7日以内 / 8-14日 / 15日超）</strong>を実質的な比較として参照してください。</div>';
+  } else {
+    el.innerHTML = '';
+  }
+}
+
+function renderCards() {
+  const c = document.getElementById('summary-cards');
+  const items = [
+    ['母数', DATA.total + '名', ''],
+    ['SA受講済', DATA.sa_yes.n + '名', ''],
+    ['SA未受講', DATA.sa_no.n + '名', ''],
+    ['SA 15日超', DATA.sa15p.n + '名', 'STEP5到達 ' + fmt(DATA.sa15p.r5_pct, '%')],
+  ];
+  c.innerHTML = items.map(([l,v,s]) => '<div class="card"><div class="label">' + l + '</div><div class="value">' + v + '</div>'
+    + (s ? '<div class="label">' + s + '</div>' : '') + '</div>').join('');
+}
+
+const chartDefaults = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { position: 'bottom' } },
+};
+
+function barChart(id, labels, datasets, yLabel) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels, datasets },
+    options: {
+      ...chartDefaults,
+      scales: { y: { beginAtZero: true, title: { display: !!yLabel, text: yLabel } } },
+    },
+  });
+}
+
+function renderCharts() {
+  barChart('chartSaDoneRate',
+    ['STEP3到達率', 'STEP5到達率'],
+    [
+      { label: 'SA受講済 (n=' + DATA.sa_yes.n + ')', data: [DATA.sa_yes.r3_pct, DATA.sa_yes.r5_pct], backgroundColor: '#2e75b6' },
+      { label: 'SA未受講 (n=' + DATA.sa_no.n + ')', data: [DATA.sa_no.r3_pct ?? 0, DATA.sa_no.r5_pct ?? 0], backgroundColor: '#ccc' },
+    ],
+    '%'
+  );
+  barChart('chartSaDoneDays',
+    ['SP→STEP5', 'STEP3→STEP5', '現在STEP'],
+    [
+      { label: 'SA受講済', data: [DATA.sa_yes.sp_s5_med, DATA.sa_yes.s3_s5_med, DATA.sa_yes.step_med], backgroundColor: '#2e75b6' },
+      { label: 'SA未受講', data: [DATA.sa_no.sp_s5_med ?? 0, DATA.sa_no.s3_s5_med ?? 0, DATA.sa_no.step_med ?? 0], backgroundColor: '#ccc' },
+    ],
+    '日数'
+  );
+  barChart('chartTimingRate',
+    ['STEP3到達率', 'STEP5到達率'],
+    [
+      { label: 'SA 7日以内 (n=' + DATA.sa7.n + ')', data: [DATA.sa7.r3_pct, DATA.sa7.r5_pct], backgroundColor: '#548235' },
+      { label: 'SA 8-14日 (n=' + DATA.sa814.n + ')', data: [DATA.sa814.r3_pct, DATA.sa814.r5_pct], backgroundColor: '#bf8f00' },
+      { label: 'SA 15日超 (n=' + DATA.sa15p.n + ')', data: [DATA.sa15p.r3_pct, DATA.sa15p.r5_pct], backgroundColor: '#c55a11' },
+    ],
+    '%'
+  );
+  barChart('chartTimingDays',
+    ['SP→STEP5', 'STEP3→STEP5', '現在STEP'],
+    [
+      { label: 'SA 7日以内', data: [DATA.sa7.sp_s5_med, DATA.sa7.s3_s5_med, DATA.sa7.step_med], backgroundColor: '#548235' },
+      { label: 'SA 8-14日', data: [DATA.sa814.sp_s5_med, DATA.sa814.s3_s5_med, DATA.sa814.step_med], backgroundColor: '#bf8f00' },
+      { label: 'SA 15日超', data: [DATA.sa15p.sp_s5_med, DATA.sa15p.s3_s5_med, DATA.sa15p.step_med], backgroundColor: '#c55a11' },
+    ],
+    '日数'
+  );
+}
+
+function bucketLabel(b) {
+  return { sa7: '7日以内', sa814: '8-14日', sa15p: '15日超', none: '未受講' }[b] || b;
+}
+function bucketClass(b) {
+  return { sa7: 'g-sa7', sa814: 'g-sa814', sa15p: 'g-sa15p', none: 'g-none' }[b] || '';
+}
+
+function renderTable() {
+  const tbody = document.querySelector('#studentTable tbody');
+  const sorted = [...DATA.students].sort((a,b) => (a.sa_gap ?? 999) - (b.sa_gap ?? 999));
+  tbody.innerHTML = sorted.map(r => '<tr class="' + bucketClass(r.bucket) + '"><td class="name">' + r.name + '</td>'
+    + '<td>' + fmt(r.sa_gap, '日') + '</td><td>' + bucketLabel(r.bucket) + '</td>'
+    + '<td class="' + (r.reached3 ? 'yes' : 'no') + '">' + (r.reached3 ? '○' : '×') + '</td>'
+    + '<td class="' + (r.reached5 ? 'yes' : 'no') + '">' + (r.reached5 ? '○' : '×') + '</td>'
+    + '<td>' + r.step + '</td><td>' + fmt(r.sp_s5, '日') + '</td><td>' + fmt(r.s3_s5, '日') + '</td></tr>').join('');
+}
+
+renderAlert();
+renderCards();
+renderCharts();
+renderTable();
+</script>
+</body>
+</html>

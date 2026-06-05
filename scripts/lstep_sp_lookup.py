@@ -46,9 +46,21 @@ def norm_name(s: str) -> str:
     return s
 
 
-def _record_from_row(name: str, join: date, step_dates: list[tuple[int, date]]) -> dict:
-    sp_start = join + timedelta(days=SP_OFFSET_DAYS)
-    sp_complete = step_dates[-1][1] if step_dates else None
+def _record_from_row(
+    name: str,
+    join: date | None,
+    step_dates: list[tuple[int, date]],
+    *,
+    program_start: date | None = None,
+    sp_start_direct: date | None = None,
+    step19_date: date | None = None,
+) -> dict:
+    sp_start = sp_start_direct or program_start or (
+        (join + timedelta(days=SP_OFFSET_DAYS)) if join else None
+    )
+    if not sp_start:
+        return {}
+    sp_complete = step19_date or (step_dates[-1][1] if step_dates else None)
     return {
         "display_name": name,
         "norm_name": norm_name(name),
@@ -80,7 +92,7 @@ def load_lstep_tsv(path: Path) -> list[dict]:
     return rows
 
 
-def load_lstep_xlsx(path: Path) -> list[dict]:
+def load_lstep_xlsx(path: Path, *, tokushin_only: bool = True) -> list[dict]:
     from import_lstep import SHEET_PROGRAM, row_to_map
 
     import openpyxl
@@ -101,31 +113,95 @@ def load_lstep_xlsx(path: Path) -> list[dict]:
         if not name:
             continue
         course = (data.get("コース") or "").strip()
-        if "特進" not in course:
+        if tokushin_only and "特進" not in course:
             continue
         join = parse_date(data.get("入会フォーム回答日"))
-        if not join:
-            continue
+        program_start = parse_date(data.get("投稿プログラム開始日"))
+        step1 = parse_date(data.get("STEP1完了日"))
+        sp_direct = program_start or step1
         step_dates: list[tuple[int, date]] = []
         for n, col in enumerate(STEP_COLS, start=1):
             d = parse_date(data.get(col))
             if d:
                 step_dates.append((n, d))
-        rows.append(_record_from_row(name, join, step_dates))
+        step19 = parse_date(data.get("STEP19完了日"))
+        rec = _record_from_row(
+            name,
+            join,
+            step_dates,
+            program_start=program_start,
+            sp_start_direct=sp_direct,
+            step19_date=step19,
+        )
+        if rec:
+            rows.append(rec)
     wb.close()
     return rows
 
 
-def build_lstep_index(path: Path) -> dict[str, dict]:
+def load_lstep_xlsx_old_sp(path: Path) -> list[dict]:
+    """投稿プログラム（旧）の【SP】受講開始日で補完用。"""
+    from import_lstep import row_to_map
+
+    import openpyxl
+
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    if "投稿プログラム（旧）" not in wb.sheetnames:
+        wb.close()
+        return []
+    ws = wb["投稿プログラム（旧）"]
+    headers: list | None = None
+    rows: list[dict] = []
+    for i, row in enumerate(ws.iter_rows(values_only=True)):
+        if i == 0:
+            headers = list(row)
+            continue
+        data = row_to_map(headers, row)
+        name = (data.get("表示名") or "").strip()
+        if not name:
+            continue
+        sp = parse_date(data.get("【SP】受講開始日"))
+        if not sp:
+            continue
+        pp9 = parse_date(data.get("【PP】Step9完了日"))
+        rows.append(
+            {
+                "display_name": name,
+                "norm_name": norm_name(name),
+                "sp_start": sp,
+                "sp_complete": pp9,
+                "latest_step": 9 if pp9 else 0,
+                "step_dates": [(9, pp9)] if pp9 else [],
+                "join_form_date": parse_date(data.get("入会フォーム回答日")),
+            }
+        )
+    wb.close()
+    return rows
+
+
+def _merge_lstep_record(existing: dict | None, new: dict) -> dict:
+    if not existing:
+        return new
+    if (new.get("latest_step") or 0) > (existing.get("latest_step") or 0):
+        return new
+    if (new.get("latest_step") or 0) == (existing.get("latest_step") or 0):
+        if new.get("step_dates") and len(new["step_dates"]) > len(existing.get("step_dates") or []):
+            return new
+    return existing
+
+
+def build_lstep_index(path: Path, *, tokushin_only: bool = False) -> dict[str, dict]:
     if path.suffix.lower() in (".xlsx", ".xlsm"):
-        records = load_lstep_xlsx(path)
+        records = load_lstep_xlsx(path, tokushin_only=tokushin_only)
+        for row in load_lstep_xlsx_old_sp(path):
+            key = row["norm_name"]
+            records.append(row)
     else:
         records = load_lstep_tsv(path)
     index: dict[str, dict] = {}
     for row in records:
         key = row["norm_name"]
-        if key not in index or row["latest_step"] > index[key]["latest_step"]:
-            index[key] = row
+        index[key] = _merge_lstep_record(index.get(key), row)
     return index
 
 

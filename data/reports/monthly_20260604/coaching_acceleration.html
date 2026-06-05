@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>伴走セッション × STEP加速（2026年4月入会・新特進）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif; margin: 0; background: #f4f4f4; color: #222; }
+  header { background: #fff; border-bottom: 1px solid #ddd; padding: 18px 24px; }
+  header h1 { margin: 0 0 6px; font-size: 20px; }
+  header p { margin: 0; font-size: 13px; color: #555; line-height: 1.6; }
+  main { padding: 20px 24px 40px; max-width: 1200px; margin: 0 auto; }
+  section { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 18px 20px; margin-bottom: 20px; }
+  h2 { margin: 0 0 8px; font-size: 16px; }
+  .note { font-size: 12px; color: #666; line-height: 1.6; margin: 0 0 14px; }
+  .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 900px) { .cards { grid-template-columns: 1fr 1fr; } }
+  .card { background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; }
+  .card .label { font-size: 11px; color: #666; }
+  .card .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+  .card .sub { font-size: 11px; color: #888; margin-top: 4px; }
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 900px) { .charts { grid-template-columns: 1fr; } }
+  .chart-box { position: relative; height: 320px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: center; }
+  th { background: #eef2f7; }
+  td.name { text-align: left; white-space: nowrap; }
+  .hi { background: #e2efda; font-weight: 600; }
+  .mid { background: #fff2cc; }
+  .lo { background: #fce4d6; }
+</style>
+</head>
+<body>
+<header>
+  <h1>伴走セッション × STEP加速（2026年4月入会・新特進）</h1>
+  <p>集計基準日: 2026-06-04 ／ 対象: STEP2+かつ伴走1回以上 30名・123セッション （伴走なし1名・STEP不足8名は除外）</p>
+</header>
+<main>
+  <section>
+    <h2>サマリ — 伴走で進みが加速したか？</h2>
+    <p class="note">
+      Lステップ各STEP完了日 × コミットプラン伴走日（X列〜）を突合。
+      「伴走後7日」= セッション当日〜7日後に完了したSTEP数。
+      「1日2STEP以上」= 同一日に2つ以上のSTEP完了。
+      STEP間隔のばらつき(CV)が伴走後に低下 = よりコンスタントに進んだ目安。
+    </p>
+    <div class="cards" id="summary-cards"></div>
+  </section>
+  <section>
+    <h2>伴走セッション単位（1回ごと）の効果</h2>
+    <div class="charts">
+      <div class="chart-box"><canvas id="chartSessionRates"></canvas></div>
+      <div class="chart-box"><canvas id="chartBeforeAfter7"></canvas></div>
+    </div>
+  </section>
+  <section>
+    <h2>初回伴走後7日以内のSTEP数（生徒別）</h2>
+    <div class="chart-box" style="height:360px"><canvas id="chartC1_7d"></canvas></div>
+  </section>
+  <section>
+    <h2>生徒別サマリ</h2>
+    <div style="overflow-x:auto"><table id="studentTable"><thead>
+      <tr>
+        <th>生徒名</th><th>伴走回数</th><th>初回後7日STEP</th><th>7日2STEP+の回数</th>
+        <th>1日2STEP日数</th><th>最大1日STEP</th><th>前7日→後7日(平均)</th>
+        <th>CV 伴走前→後</th>
+      </tr>
+    </thead><tbody></tbody></table></div>
+  </section>
+</main>
+<script>
+const DATA = {"summary": {"students": 30, "sessions": 123, "skipped_no_steps": 8, "skipped_no_coach": 1, "sess_after7_ge2_pct": 53.7, "sess_after7_ge1_pct": 67.5, "sess_burst_after_pct": 22.0, "sess_delta7_up_pct": 30.9, "median_before7": 2, "median_after7": 2, "students_c1_7d_ge2_pct": 86.7, "students_any_burst_after_pct": 66.7, "students_more_regular_pct": 46.7, "students_burst_days_total_ge1_pct": 93.3}, "session_events": [{"name": "さいとうなつみ", "session": 1, "coach_date": "2026-05-20", "before7": 0, "after7": 1, "after3": 1, "burst_after": false, "delta7": 1}, {"name": "さいとうなつみ", "session": 2, "coach_date": "2026-05-31", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "こいでるか", "session": 1, "coach_date": "2026-04-28", "before7": 4, "after7": 4, "after3": 3, "burst_after": true, "delta7": 0}, {"name": "こいでるか", "session": 2, "coach_date": "2026-05-07", "before7": 3, "after7": 3, "after3": 2, "burst_after": true, "delta7": 0}, {"name": "こいでるか", "session": 3, "coach_date": "2026-05-21", "before7": 1, "after7": 0, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "こいでるか", "session": 4, "coach_date": "2026-06-04", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "おかもとまこ", "session": 1, "coach_date": "2026-05-01", "before7": 5, "after7": 3, "after3": 1, "burst_after": false, "delta7": -2}, {"name": "おかもとまこ", "session": 2, "coach_date": "2026-05-08", "before7": 2, "after7": 5, "after3": 2, "burst_after": false, "delta7": 3}, {"name": "おかもとまこ", "session": 3, "coach_date": "2026-05-18", "before7": 4, "after7": 0, "after3": 0, "burst_after": false, "delta7": -4}, {"name": "おかもとまこ", "session": 4, "coach_date": "2026-05-27", "before7": 2, "after7": 1, "after3": 1, "burst_after": false, "delta7": -1}, {"name": "おかもとまこ", "session": 5, "coach_date": "2026-06-04", "before7": 1, "after7": 0, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "せとすずか", "session": 1, "coach_date": "2026-04-26", "before7": 5, "after7": 6, "after3": 3, "burst_after": true, "delta7": 1}, {"name": "せとすずか", "session": 2, "coach_date": "2026-05-06", "before7": 4, "after7": 1, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "せとすずか", "session": 3, "coach_date": "2026-05-13", "before7": 1, "after7": 0, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "せとすずか", "session": 4, "coach_date": "2026-05-24", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "せとすずか", "session": 5, "coach_date": "2026-05-31", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "はなもとけいこ", "session": 1, "coach_date": "2026-04-29", "before7": 1, "after7": 3, "after3": 2, "burst_after": false, "delta7": 2}, {"name": "はなもとけいこ", "session": 2, "coach_date": "2026-05-09", "before7": 3, "after7": 2, "after3": 1, "burst_after": false, "delta7": -1}, {"name": "はなもとけいこ", "session": 3, "coach_date": "2026-05-16", "before7": 2, "after7": 1, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "はなもとけいこ", "session": 4, "coach_date": "2026-05-22", "before7": 0, "after7": 2, "after3": 1, "burst_after": false, "delta7": 2}, {"name": "はなもとけいこ", "session": 5, "coach_date": "2026-05-28", "before7": 2, "after7": 0, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "はなもとけいこ", "session": 6, "coach_date": "2026-06-04", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "さかもとななえ", "session": 1, "coach_date": "2026-04-27", "before7": 7, "after7": 5, "after3": 4, "burst_after": true, "delta7": -2}, {"name": "さかもとななえ", "session": 2, "coach_date": "2026-05-06", "before7": 1, "after7": 3, "after3": 2, "burst_after": true, "delta7": 2}, {"name": "さかもとななえ", "session": 3, "coach_date": "2026-05-13", "before7": 2, "after7": 1, "after3": 1, "burst_after": false, "delta7": -1}, {"name": "さかもとななえ", "session": 4, "coach_date": "2026-05-20", "before7": 1, "after7": 0, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "さかもとななえ", "session": 5, "coach_date": "2026-05-27", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "さかもとななえ", "session": 6, "coach_date": "2026-06-03", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "くろこなおき", "session": 1, "coach_date": "2026-04-28", "before7": 5, "after7": 6, "after3": 4, "burst_after": true, "delta7": 1}, {"name": "くろこなおき", "session": 2, "coach_date": "2026-05-07", "before7": 4, "after7": 1, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "くろこなおき", "session": 3, "coach_date": "2026-05-14", "before7": 1, "after7": 3, "after3": 0, "burst_after": true, "delta7": 2}, {"name": "くろこなおき", "session": 4, "coach_date": "2026-05-21", "before7": 3, "after7": 0, "after3": 0, "burst_after": false, "delta7": -3}, {"name": "なかむらほのか", "session": 1, "coach_date": "2026-04-26", "before7": 3, "after7": 5, "after3": 2, "burst_after": true, "delta7": 2}, {"name": "なかむらほのか", "session": 2, "coach_date": "2026-05-02", "before7": 3, "after7": 3, "after3": 3, "burst_after": true, "delta7": 0}, {"name": "なかむらほのか", "session": 3, "coach_date": "2026-05-14", "before7": 0, "after7": 3, "after3": 0, "burst_after": true, "delta7": 3}, {"name": "なかむらほのか", "session": 4, "coach_date": "2026-05-23", "before7": 6, "after7": 1, "after3": 0, "burst_after": false, "delta7": -5}, {"name": "なかむらほのか", "session": 5, "coach_date": "2026-05-29", "before7": 3, "after7": 2, "after3": 2, "burst_after": false, "delta7": -1}, {"name": "なかむらほのか", "session": 6, "coach_date": "2026-06-04", "before7": 2, "after7": 0, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "たけだみえこ", "session": 1, "coach_date": "2026-05-08", "before7": 1, "after7": 7, "after3": 4, "burst_after": true, "delta7": 6}, {"name": "たけだみえこ", "session": 2, "coach_date": "2026-05-14", "before7": 7, "after7": 4, "after3": 2, "burst_after": false, "delta7": -3}, {"name": "たけだみえこ", "session": 3, "coach_date": "2026-05-22", "before7": 4, "after7": 1, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "たけだみえこ", "session": 4, "coach_date": "2026-05-29", "before7": 1, "after7": 2, "after3": 2, "burst_after": true, "delta7": 1}, {"name": "いのうえなおこ", "session": 1, "coach_date": "2026-05-01", "before7": 4, "after7": 5, "after3": 2, "burst_after": true, "delta7": 1}, {"name": "いのうえなおこ", "session": 2, "coach_date": "2026-05-17", "before7": 1, "after7": 0, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "いのうえなおこ", "session": 3, "coach_date": "2026-05-27", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "こみやみゆき", "session": 1, "coach_date": "2026-05-02", "before7": 3, "after7": 4, "after3": 3, "burst_after": true, "delta7": 1}, {"name": "こみやみゆき", "session": 2, "coach_date": "2026-05-09", "before7": 4, "after7": 4, "after3": 2, "burst_after": false, "delta7": 0}, {"name": "こみやみゆき", "session": 3, "coach_date": "2026-05-17", "before7": 4, "after7": 2, "after3": 1, "burst_after": false, "delta7": -2}, {"name": "こみやみゆき", "session": 4, "coach_date": "2026-05-23", "before7": 1, "after7": 2, "after3": 2, "burst_after": false, "delta7": 1}, {"name": "こみやみゆき", "session": 5, "coach_date": "2026-05-30", "before7": 2, "after7": 0, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "くぼたまきこ", "session": 1, "coach_date": "2026-05-03", "before7": 3, "after7": 5, "after3": 3, "burst_after": true, "delta7": 2}, {"name": "くぼたまきこ", "session": 2, "coach_date": "2026-05-17", "before7": 0, "after7": 2, "after3": 2, "burst_after": false, "delta7": 2}, {"name": "くぼたまきこ", "session": 3, "coach_date": "2026-05-25", "before7": 1, "after7": 3, "after3": 1, "burst_after": false, "delta7": 2}, {"name": "くぼたまきこ", "session": 4, "coach_date": "2026-06-02", "before7": 3, "after7": 0, "after3": 0, "burst_after": false, "delta7": -3}, {"name": "すがさわだいすけ", "session": 1, "coach_date": "2026-04-27", "before7": 3, "after7": 6, "after3": 3, "burst_after": true, "delta7": 3}, {"name": "すがさわだいすけ", "session": 2, "coach_date": "2026-05-04", "before7": 5, "after7": 6, "after3": 3, "burst_after": false, "delta7": 1}, {"name": "すがさわだいすけ", "session": 3, "coach_date": "2026-05-12", "before7": 5, "after7": 2, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "すがさわだいすけ", "session": 4, "coach_date": "2026-05-26", "before7": 2, "after7": 0, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "のづじゅん", "session": 1, "coach_date": "2026-05-04", "before7": 4, "after7": 5, "after3": 3, "burst_after": true, "delta7": 1}, {"name": "のづじゅん", "session": 2, "coach_date": "2026-05-12", "before7": 5, "after7": 3, "after3": 1, "burst_after": false, "delta7": -2}, {"name": "のづじゅん", "session": 3, "coach_date": "2026-05-19", "before7": 3, "after7": 1, "after3": 1, "burst_after": false, "delta7": -2}, {"name": "のづじゅん", "session": 4, "coach_date": "2026-05-27", "before7": 1, "after7": 1, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "ふくだえりな", "session": 1, "coach_date": "2026-05-13", "before7": 2, "after7": 0, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "ふくだえりな", "session": 2, "coach_date": "2026-05-21", "before7": 0, "after7": 3, "after3": 0, "burst_after": true, "delta7": 3}, {"name": "ふくだえりな", "session": 3, "coach_date": "2026-05-28", "before7": 3, "after7": 0, "after3": 0, "burst_after": false, "delta7": -3}, {"name": "ふくだえりな", "session": 4, "coach_date": "2026-06-03", "before7": 1, "after7": 0, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "いいじまいつき", "session": 1, "coach_date": "2026-05-03", "before7": 5, "after7": 6, "after3": 3, "burst_after": true, "delta7": 1}, {"name": "いいじまいつき", "session": 2, "coach_date": "2026-05-14", "before7": 5, "after7": 2, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "いいじまいつき", "session": 3, "coach_date": "2026-05-25", "before7": 4, "after7": 0, "after3": 0, "burst_after": false, "delta7": -4}, {"name": "いいじまいつき", "session": 4, "coach_date": "2026-06-01", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "おかむらたかこ", "session": 1, "coach_date": "2026-05-03", "before7": 1, "after7": 5, "after3": 1, "burst_after": true, "delta7": 4}, {"name": "おかむらたかこ", "session": 2, "coach_date": "2026-05-10", "before7": 4, "after7": 3, "after3": 1, "burst_after": false, "delta7": -1}, {"name": "おかむらたかこ", "session": 3, "coach_date": "2026-05-17", "before7": 3, "after7": 2, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "おかむらたかこ", "session": 4, "coach_date": "2026-05-26", "before7": 2, "after7": 3, "after3": 1, "burst_after": false, "delta7": 1}, {"name": "おかむらたかこ", "session": 5, "coach_date": "2026-06-02", "before7": 3, "after7": 0, "after3": 0, "burst_after": false, "delta7": -3}, {"name": "むなかたさよ", "session": 1, "coach_date": "2026-05-02", "before7": 3, "after7": 0, "after3": 0, "burst_after": false, "delta7": -3}, {"name": "むなかたさよ", "session": 2, "coach_date": "2026-05-13", "before7": 2, "after7": 2, "after3": 1, "burst_after": false, "delta7": 0}, {"name": "むなかたさよ", "session": 3, "coach_date": "2026-05-20", "before7": 2, "after7": 2, "after3": 2, "burst_after": true, "delta7": 0}, {"name": "むなかたさよ", "session": 4, "coach_date": "2026-05-29", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "わたなべありさ", "session": 1, "coach_date": "2026-05-07", "before7": 5, "after7": 2, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "わたなべありさ", "session": 2, "coach_date": "2026-05-15", "before7": 1, "after7": 7, "after3": 2, "burst_after": true, "delta7": 6}, {"name": "わたなべありさ", "session": 3, "coach_date": "2026-05-21", "before7": 5, "after7": 4, "after3": 3, "burst_after": false, "delta7": -1}, {"name": "わたなべありさ", "session": 4, "coach_date": "2026-05-29", "before7": 3, "after7": 0, "after3": 0, "burst_after": false, "delta7": -3}, {"name": "すぎやまももこ", "session": 1, "coach_date": "2026-05-05", "before7": 6, "after7": 3, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "すぎやまももこ", "session": 2, "coach_date": "2026-05-11", "before7": 1, "after7": 8, "after3": 6, "burst_after": true, "delta7": 7}, {"name": "すぎやまももこ", "session": 3, "coach_date": "2026-05-18", "before7": 7, "after7": 2, "after3": 1, "burst_after": false, "delta7": -5}, {"name": "すぎやまももこ", "session": 4, "coach_date": "2026-05-25", "before7": 1, "after7": 4, "after3": 3, "burst_after": true, "delta7": 3}, {"name": "すぎやまももこ", "session": 5, "coach_date": "2026-06-01", "before7": 4, "after7": 0, "after3": 0, "burst_after": false, "delta7": -4}, {"name": "たかはしみか", "session": 1, "coach_date": "2026-05-09", "before7": 6, "after7": 6, "after3": 6, "burst_after": true, "delta7": 0}, {"name": "たかはしみか", "session": 2, "coach_date": "2026-05-18", "before7": 0, "after7": 2, "after3": 0, "burst_after": false, "delta7": 2}, {"name": "たかはしみか", "session": 3, "coach_date": "2026-05-24", "before7": 1, "after7": 3, "after3": 1, "burst_after": false, "delta7": 2}, {"name": "たかはしみか", "session": 4, "coach_date": "2026-05-31", "before7": 3, "after7": 0, "after3": 0, "burst_after": false, "delta7": -3}, {"name": "さとうたいき", "session": 1, "coach_date": "2026-05-11", "before7": 2, "after7": 4, "after3": 2, "burst_after": true, "delta7": 2}, {"name": "さとうたいき", "session": 2, "coach_date": "2026-05-18", "before7": 4, "after7": 1, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "さとうたいき", "session": 3, "coach_date": "2026-05-25", "before7": 1, "after7": 1, "after3": 1, "burst_after": false, "delta7": 0}, {"name": "さとうたいき", "session": 4, "coach_date": "2026-06-01", "before7": 1, "after7": 0, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "さしわともこ", "session": 1, "coach_date": "2026-05-11", "before7": 0, "after7": 3, "after3": 1, "burst_after": false, "delta7": 3}, {"name": "さしわともこ", "session": 2, "coach_date": "2026-05-19", "before7": 3, "after7": 3, "after3": 2, "burst_after": false, "delta7": 0}, {"name": "さしわともこ", "session": 3, "coach_date": "2026-05-24", "before7": 3, "after7": 2, "after3": 1, "burst_after": false, "delta7": -1}, {"name": "ひらいでちえこ", "session": 1, "coach_date": "2026-05-12", "before7": 3, "after7": 3, "after3": 2, "burst_after": false, "delta7": 0}, {"name": "ひらいでちえこ", "session": 2, "coach_date": "2026-05-19", "before7": 3, "after7": 1, "after3": 1, "burst_after": false, "delta7": -2}, {"name": "ひらいでちえこ", "session": 3, "coach_date": "2026-05-26", "before7": 1, "after7": 1, "after3": 1, "burst_after": false, "delta7": 0}, {"name": "ひらいでちえこ", "session": 4, "coach_date": "2026-06-02", "before7": 1, "after7": 0, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "かわさきたかひろ", "session": 1, "coach_date": "2026-05-22", "before7": 4, "after7": 1, "after3": 1, "burst_after": false, "delta7": -3}, {"name": "かわさきたかひろ", "session": 2, "coach_date": "2026-05-28", "before7": 1, "after7": 2, "after3": 1, "burst_after": false, "delta7": 1}, {"name": "かわさきたかひろ", "session": 3, "coach_date": "2026-06-04", "before7": 2, "after7": 0, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "くりはらあきこ（ごうだいあきこ）", "session": 1, "coach_date": "2026-05-17", "before7": 4, "after7": 3, "after3": 2, "burst_after": false, "delta7": -1}, {"name": "くりはらあきこ（ごうだいあきこ）", "session": 2, "coach_date": "2026-05-22", "before7": 4, "after7": 2, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "くりはらあきこ（ごうだいあきこ）", "session": 3, "coach_date": "2026-05-29", "before7": 1, "after7": 2, "after3": 2, "burst_after": false, "delta7": 1}, {"name": "くりはらあきこ（ごうだいあきこ）", "session": 4, "coach_date": "2026-06-03", "before7": 2, "after7": 0, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "いわさきじゅんこ", "session": 1, "coach_date": "2026-05-13", "before7": 2, "after7": 4, "after3": 3, "burst_after": false, "delta7": 2}, {"name": "いわさきじゅんこ", "session": 2, "coach_date": "2026-05-20", "before7": 4, "after7": 2, "after3": 1, "burst_after": false, "delta7": -2}, {"name": "いわさきじゅんこ", "session": 3, "coach_date": "2026-05-28", "before7": 2, "after7": 0, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "いわさきじゅんこ", "session": 4, "coach_date": "2026-06-04", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "すながわえみこ", "session": 1, "coach_date": "2026-05-14", "before7": 6, "after7": 4, "after3": 3, "burst_after": false, "delta7": -2}, {"name": "すながわえみこ", "session": 2, "coach_date": "2026-05-22", "before7": 3, "after7": 1, "after3": 0, "burst_after": false, "delta7": -2}, {"name": "すながわえみこ", "session": 3, "coach_date": "2026-05-29", "before7": 0, "after7": 1, "after3": 1, "burst_after": false, "delta7": 1}, {"name": "ななみみほ", "session": 1, "coach_date": "2026-05-14", "before7": 3, "after7": 2, "after3": 0, "burst_after": false, "delta7": -1}, {"name": "ななみみほ", "session": 2, "coach_date": "2026-05-21", "before7": 1, "after7": 6, "after3": 6, "burst_after": true, "delta7": 5}, {"name": "ななみみほ", "session": 3, "coach_date": "2026-05-30", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}, {"name": "かたひらゆみ", "session": 1, "coach_date": "2026-05-18", "before7": 2, "after7": 4, "after3": 2, "burst_after": false, "delta7": 2}, {"name": "かたひらゆみ", "session": 2, "coach_date": "2026-05-27", "before7": 3, "after7": 0, "after3": 0, "burst_after": false, "delta7": -3}, {"name": "かたひらゆみ", "session": 3, "coach_date": "2026-06-02", "before7": 0, "after7": 0, "after3": 0, "burst_after": false, "delta7": 0}], "students": [{"name": "たけだみえこ", "n_coach": 4, "n_steps": 18, "burst_days_total": 4, "max_steps_per_day": 2, "steps_after_c1_7d": 7, "sess_after7_ge2": 3, "sess_burst_after": 2, "avg_before7": 3.2, "avg_after7": 3.5, "cv_before": 0.95, "cv_after": 1.06, "burst_before": 1, "burst_after": 3}, {"name": "せとすずか", "n_coach": 5, "n_steps": 16, "burst_days_total": 4, "max_steps_per_day": 2, "steps_after_c1_7d": 6, "sess_after7_ge2": 1, "sess_burst_after": 1, "avg_before7": 2, "avg_after7": 1.4, "cv_before": 1.0, "cv_after": 0.94, "burst_before": 3, "burst_after": 1}, {"name": "くろこなおき", "n_coach": 4, "n_steps": 15, "burst_days_total": 6, "max_steps_per_day": 2, "steps_after_c1_7d": 6, "sess_after7_ge2": 2, "sess_burst_after": 2, "avg_before7": 3.2, "avg_after7": 2.5, "cv_before": 1.2, "cv_after": 1.53, "burst_before": 2, "burst_after": 4}, {"name": "すがさわだいすけ", "n_coach": 4, "n_steps": 17, "burst_days_total": 1, "max_steps_per_day": 2, "steps_after_c1_7d": 6, "sess_after7_ge2": 3, "sess_burst_after": 1, "avg_before7": 3.8, "avg_after7": 3.5, "cv_before": 0.47, "cv_after": 0.83, "burst_before": 0, "burst_after": 1}, {"name": "いいじまいつき", "n_coach": 4, "n_steps": 19, "burst_days_total": 4, "max_steps_per_day": 2, "steps_after_c1_7d": 6, "sess_after7_ge2": 2, "sess_burst_after": 1, "avg_before7": 3.5, "avg_after7": 2, "cv_before": 0.95, "cv_after": 0.83, "burst_before": 2, "burst_after": 2}, {"name": "たかはしみか", "n_coach": 4, "n_steps": 19, "burst_days_total": 4, "max_steps_per_day": 3, "steps_after_c1_7d": 6, "sess_after7_ge2": 3, "sess_burst_after": 1, "avg_before7": 2.5, "avg_after7": 2.8, "cv_before": 0.95, "cv_after": 1.91, "burst_before": 2, "burst_after": 2}, {"name": "さかもとななえ", "n_coach": 6, "n_steps": 19, "burst_days_total": 5, "max_steps_per_day": 4, "steps_after_c1_7d": 5, "sess_after7_ge2": 2, "sess_burst_after": 2, "avg_before7": 1.8, "avg_after7": 1.5, "cv_before": 1.61, "cv_after": 1.33, "burst_before": 3, "burst_after": 2}, {"name": "なかむらほのか", "n_coach": 6, "n_steps": 17, "burst_days_total": 3, "max_steps_per_day": 3, "steps_after_c1_7d": 5, "sess_after7_ge2": 4, "sess_burst_after": 3, "avg_before7": 2.8, "avg_after7": 2.3, "cv_before": 0.71, "cv_after": 1.36, "burst_before": 0, "burst_after": 3}, {"name": "いのうえなおこ", "n_coach": 3, "n_steps": 13, "burst_days_total": 4, "max_steps_per_day": 2, "steps_after_c1_7d": 5, "sess_after7_ge2": 1, "sess_burst_after": 1, "avg_before7": 1.7, "avg_after7": 1.7, "cv_before": 1.0, "cv_after": 1.14, "burst_before": 2, "burst_after": 2}, {"name": "くぼたまきこ", "n_coach": 4, "n_steps": 14, "burst_days_total": 1, "max_steps_per_day": 2, "steps_after_c1_7d": 5, "sess_after7_ge2": 3, "sess_burst_after": 1, "avg_before7": 1.8, "avg_after7": 2.5, "cv_before": 0.17, "cv_after": 0.93, "burst_before": 0, "burst_after": 1}, {"name": "のづじゅん", "n_coach": 4, "n_steps": 16, "burst_days_total": 1, "max_steps_per_day": 2, "steps_after_c1_7d": 5, "sess_after7_ge2": 2, "sess_burst_after": 1, "avg_before7": 3.2, "avg_after7": 2.5, "cv_before": 0.34, "cv_after": 1.02, "burst_before": 0, "burst_after": 1}, {"name": "おかむらたかこ", "n_coach": 5, "n_steps": 14, "burst_days_total": 1, "max_steps_per_day": 2, "steps_after_c1_7d": 5, "sess_after7_ge2": 4, "sess_burst_after": 1, "avg_before7": 2.6, "avg_after7": 2.6, "cv_before": null, "cv_after": 0.93, "burst_before": 0, "burst_after": 1}, {"name": "こいでるか", "n_coach": 4, "n_steps": 19, "burst_days_total": 3, "max_steps_per_day": 3, "steps_after_c1_7d": 4, "sess_after7_ge2": 2, "sess_burst_after": 2, "avg_before7": 2, "avg_after7": 1.8, "cv_before": 0.81, "cv_after": 0.75, "burst_before": 1, "burst_after": 2}, {"name": "こみやみゆき", "n_coach": 5, "n_steps": 17, "burst_days_total": 2, "max_steps_per_day": 2, "steps_after_c1_7d": 4, "sess_after7_ge2": 4, "sess_burst_after": 1, "avg_before7": 2.8, "avg_after7": 2.4, "cv_before": 1.17, "cv_after": 0.79, "burst_before": 1, "burst_after": 1}, {"name": "さとうたいき", "n_coach": 4, "n_steps": 17, "burst_days_total": 4, "max_steps_per_day": 4, "steps_after_c1_7d": 4, "sess_after7_ge2": 1, "sess_burst_after": 1, "avg_before7": 2, "avg_after7": 1.5, "cv_before": 1.56, "cv_after": 1.11, "burst_before": 2, "burst_after": 2}, {"name": "いわさきじゅんこ", "n_coach": 4, "n_steps": 15, "burst_days_total": 1, "max_steps_per_day": 3, "steps_after_c1_7d": 4, "sess_after7_ge2": 2, "sess_burst_after": 0, "avg_before7": 2, "avg_after7": 1.5, "cv_before": 1.03, "cv_after": 0.59, "burst_before": 1, "burst_after": 0}, {"name": "すながわえみこ", "n_coach": 3, "n_steps": 14, "burst_days_total": 2, "max_steps_per_day": 2, "steps_after_c1_7d": 4, "sess_after7_ge2": 1, "sess_burst_after": 0, "avg_before7": 3, "avg_after7": 2, "cv_before": 0.99, "cv_after": 0.83, "burst_before": 2, "burst_after": 0}, {"name": "かたひらゆみ", "n_coach": 3, "n_steps": 9, "burst_days_total": 0, "max_steps_per_day": 1, "steps_after_c1_7d": 4, "sess_after7_ge2": 1, "sess_burst_after": 0, "avg_before7": 1.7, "avg_after7": 1.3, "cv_before": 0.99, "cv_after": 0.49, "burst_before": 0, "burst_after": 0}, {"name": "おかもとまこ", "n_coach": 5, "n_steps": 19, "burst_days_total": 2, "max_steps_per_day": 2, "steps_after_c1_7d": 3, "sess_after7_ge2": 2, "sess_burst_after": 0, "avg_before7": 2.8, "avg_after7": 1.8, "cv_before": 0.59, "cv_after": 1.07, "burst_before": 1, "burst_after": 1}, {"name": "はなもとけいこ", "n_coach": 6, "n_steps": 13, "burst_days_total": 1, "max_steps_per_day": 2, "steps_after_c1_7d": 3, "sess_after7_ge2": 3, "sess_burst_after": 0, "avg_before7": 1.3, "avg_after7": 1.3, "cv_before": 0.69, "cv_after": 0.74, "burst_before": 0, "burst_after": 1}, {"name": "すぎやまももこ", "n_coach": 5, "n_steps": 19, "burst_days_total": 3, "max_steps_per_day": 3, "steps_after_c1_7d": 3, "sess_after7_ge2": 4, "sess_burst_after": 2, "avg_before7": 3.8, "avg_after7": 3.4, "cv_before": 0.56, "cv_after": 1.14, "burst_before": 1, "burst_after": 2}, {"name": "さしわともこ", "n_coach": 3, "n_steps": 11, "burst_days_total": 0, "max_steps_per_day": 1, "steps_after_c1_7d": 3, "sess_after7_ge2": 3, "sess_burst_after": 0, "avg_before7": 2, "avg_after7": 2.7, "cv_before": 0.87, "cv_after": 0.56, "burst_before": 0, "burst_after": 0}, {"name": "ひらいでちえこ", "n_coach": 4, "n_steps": 14, "burst_days_total": 2, "max_steps_per_day": 3, "steps_after_c1_7d": 3, "sess_after7_ge2": 1, "sess_burst_after": 0, "avg_before7": 2, "avg_after7": 1.2, "cv_before": 1.05, "cv_after": 0.76, "burst_before": 2, "burst_after": 0}, {"name": "くりはらあきこ（ごうだいあきこ）", "n_coach": 4, "n_steps": 17, "burst_days_total": 1, "max_steps_per_day": 2, "steps_after_c1_7d": 3, "sess_after7_ge2": 3, "sess_burst_after": 0, "avg_before7": 2.8, "avg_after7": 1.8, "cv_before": 0.76, "cv_after": 0.64, "burst_before": 1, "burst_after": 0}, {"name": "わたなべありさ", "n_coach": 4, "n_steps": 19, "burst_days_total": 1, "max_steps_per_day": 2, "steps_after_c1_7d": 2, "sess_after7_ge2": 3, "sess_burst_after": 1, "avg_before7": 3.5, "avg_after7": 3.2, "cv_before": 0.28, "cv_after": 0.82, "burst_before": 0, "burst_after": 1}, {"name": "ななみみほ", "n_coach": 3, "n_steps": 16, "burst_days_total": 1, "max_steps_per_day": 5, "steps_after_c1_7d": 2, "sess_after7_ge2": 2, "sess_burst_after": 1, "avg_before7": 1.3, "avg_after7": 2.7, "cv_before": 0.57, "cv_after": 1.55, "burst_before": 0, "burst_after": 1}, {"name": "さいとうなつみ", "n_coach": 2, "n_steps": 9, "burst_days_total": 3, "max_steps_per_day": 3, "steps_after_c1_7d": 1, "sess_after7_ge2": 0, "sess_burst_after": 0, "avg_before7": 0, "avg_after7": 0.5, "cv_before": 2.24, "cv_after": null, "burst_before": 3, "burst_after": 0}, {"name": "かわさきたかひろ", "n_coach": 3, "n_steps": 11, "burst_days_total": 1, "max_steps_per_day": 3, "steps_after_c1_7d": 1, "sess_after7_ge2": 1, "sess_burst_after": 0, "avg_before7": 2.3, "avg_after7": 1, "cv_before": 0.75, "cv_after": 0.85, "burst_before": 1, "burst_after": 0}, {"name": "ふくだえりな", "n_coach": 4, "n_steps": 11, "burst_days_total": 3, "max_steps_per_day": 2, "steps_after_c1_7d": 0, "sess_after7_ge2": 1, "sess_burst_after": 1, "avg_before7": 1.5, "avg_after7": 0.8, "cv_before": 1.5, "cv_after": 1.41, "burst_before": 2, "burst_after": 1}, {"name": "むなかたさよ", "n_coach": 4, "n_steps": 9, "burst_days_total": 2, "max_steps_per_day": 2, "steps_after_c1_7d": 0, "sess_after7_ge2": 2, "sess_burst_after": 1, "avg_before7": 1.8, "avg_after7": 1, "cv_before": 1.41, "cv_after": 0.67, "burst_before": 1, "burst_after": 1}]};
+const S = DATA.summary;
+
+function renderCards() {
+  const items = [
+    ['分析対象', S.students + '名 / ' + S.sessions + 'セッション', 'STEP2+ & 伴走1回以上'],
+    ['伴走後7日でSTEP≥2', S.sess_after7_ge2_pct + '%', 'セッション単位'],
+    ['伴走後7日で1日2STEP+', S.sess_burst_after_pct + '%', 'セッション単位'],
+    ['前7日より後7日が多い', S.sess_delta7_up_pct + '%', 'セッション単位'],
+    ['初回伴走後7日でSTEP≥2', S.students_c1_7d_ge2_pct + '%', '生徒単位'],
+    ['1日2STEP以上経験', S.students_burst_days_total_ge1_pct + '%', '生徒単位'],
+    ['伴走後CV↓(規則的)', S.students_more_regular_pct + '%', '生徒単位'],
+    ['前7日/後7日 STEP中央', S.median_before7 + ' → ' + S.median_after7, 'セッション単位'],
+  ];
+  document.getElementById('summary-cards').innerHTML = items.map(([l,v,s]) =>
+    '<div class="card"><div class="label">' + l + '</div><div class="value">' + v + '</div><div class="sub">' + s + '</div></div>'
+  ).join('');
+}
+
+const chartOpts = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { position: 'bottom' } },
+};
+
+new Chart(document.getElementById('chartSessionRates'), {
+  type: 'bar',
+  data: {
+    labels: ['伴走後7日\nSTEP≥2', '伴走後7日\nSTEP≥1', '伴走後7日\n1日2STEP+', '後7日>前7日'],
+    datasets: [{
+      label: '該当率 (%)',
+      data: [S.sess_after7_ge2_pct, S.sess_after7_ge1_pct, S.sess_burst_after_pct, S.sess_delta7_up_pct],
+      backgroundColor: ['#ed7d31', '#f4b183', '#c55a11', '#2e75b6'],
+    }],
+  },
+  options: { ...chartOpts, scales: { y: { beginAtZero: true, max: 100, title: { display: true, text: '%' } } } },
+});
+
+new Chart(document.getElementById('chartBeforeAfter7'), {
+  type: 'bar',
+  data: {
+    labels: ['伴走前7日', '伴走後7日'],
+    datasets: [{
+      label: 'STEP数（セッション単位・中央値）',
+      data: [S.median_before7, S.median_after7],
+      backgroundColor: ['#bdd7ee', '#ed7d31'],
+    }],
+  },
+  options: { ...chartOpts, scales: { y: { beginAtZero: true, title: { display: true, text: 'STEP数' } } } },
+});
+
+const topStudents = DATA.students.slice(0, 20);
+new Chart(document.getElementById('chartC1_7d'), {
+  type: 'bar',
+  data: {
+    labels: topStudents.map(s => s.name),
+    datasets: [{
+      label: '初回伴走後7日以内のSTEP数',
+      data: topStudents.map(s => s.steps_after_c1_7d),
+      backgroundColor: topStudents.map(s => s.steps_after_c1_7d >= 2 ? '#548235' : '#d9d9d9'),
+    }],
+  },
+  options: {
+    ...chartOpts,
+    indexAxis: 'y',
+    scales: { x: { beginAtZero: true, title: { display: true, text: 'STEP数' } } },
+  },
+});
+
+function rowClass(s) {
+  if (s.steps_after_c1_7d >= 4 || s.sess_after7_ge2 >= 2) return 'hi';
+  if (s.steps_after_c1_7d >= 2) return 'mid';
+  return 'lo';
+}
+
+document.querySelector('#studentTable tbody').innerHTML = DATA.students.map(s =>
+  '<tr class="' + rowClass(s) + '"><td class="name">' + s.name + '</td>'
+  + '<td>' + s.n_coach + '</td><td>' + s.steps_after_c1_7d + '</td><td>' + s.sess_after7_ge2 + '</td>'
+  + '<td>' + s.burst_days_total + '</td><td>' + s.max_steps_per_day + '</td>'
+  + '<td>' + s.avg_before7 + ' → ' + s.avg_after7 + '</td>'
+  + '<td>' + (s.cv_before ?? '—') + ' → ' + (s.cv_after ?? '—') + '</td></tr>'
+).join('');
+
+renderCards();
+</script>
+</body>
+</html>

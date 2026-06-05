@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from collections import defaultdict
 from datetime import datetime
@@ -32,13 +33,30 @@ COL = {
     "lecture": 14,
     "interview": 15,
     "sp_start": 16,
-    "first_regular": 17,
-    "mg": 19,
+    "first_regular": 18,  # 1回目通常セッション（旧レイアウトでは17=SPタイプ）
+    "mg": 20,  # 担当MG名（旧レイアウトでは19=最終サポート日）
 }
-SELF_ANALYSIS_COL = 21  # V: 自己分析セッション実施日
-COACHING_COLS = list(range(22, 34))  # W(0)〜AG(12)
+# コミットプラン(9)+: 列22=自己分析（行9ヘッダは「0」）、列23〜=通常コーチング1〜12
+SELF_ANALYSIS_COL = 22
+COACHING_COLS = list(range(23, 35))
 
 WEEKLY_MIN, WEEKLY_MAX = 5, 9
+
+_DATE_IN_MG = re.compile(r"20\d{2}[/\-]|00:00:00")
+
+
+def normalize_mg(raw) -> str:
+    """担当MG名（U列=col20）。日付・最終サポート日の誤混入を除外。"""
+    if raw is None or (isinstance(raw, float) and pd.isna(raw)):
+        return ""
+    if isinstance(raw, datetime):
+        return ""
+    s = str(raw).strip()
+    if not s or s.lower() == "nan":
+        return ""
+    if _DATE_IN_MG.search(s):
+        return ""
+    return s
 
 
 def parse_date(v) -> datetime.date | None:
@@ -126,9 +144,7 @@ def load_students(df: pd.DataFrame, year: int, month: int, tokushin_only: bool) 
         if not cohort_date_in_month(row, year, month):
             continue
 
-        mg = str(row[COL["mg"]]).strip() if pd.notna(row[COL["mg"]]) else ""
-        if mg == "nan":
-            mg = ""
+        mg = normalize_mg(row[COL["mg"]])
 
         sp = parse_date(row[COL["sp_start"]])
         sa = parse_date(row[SELF_ANALYSIS_COL])
