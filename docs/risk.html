@@ -60,7 +60,7 @@
     <label><input type="radio" name="p" value="2" checked onchange="draw()">2</label>
     <label><input type="radio" name="p" value="3" onchange="draw()">3</label>
   </fieldset>
-  <label><input type="checkbox" id="hide0" onchange="draw()">未着手(STEP0)を隠す</label>
+  <label><input type="checkbox" id="hide0" checked onchange="draw()">未着手(STEP0)を隠す</label>
   <span class="cnt" id="cnt"></span>
 </div>
 <div class="wrap">
@@ -86,7 +86,9 @@ function feasRem(step, pace){ return (18-step)/pace; }
 function draw(){
   const course=val('c'), pace=parseFloat(val('p')), hide0=document.getElementById('hide0').checked;
   const svg=document.getElementById('chart');
-  let rows = DATA.prog.filter(p => (course==='all'||p.course===course) && !(hide0 && p.step===0));
+  const courseSet = DATA.prog.filter(p => course==='all'||p.course===course);
+  const nStep0 = courseSet.filter(p => p.step===0).length;
+  let rows = hide0 ? courseSet.filter(p => p.step!==0) : courseSet;
   // zone polygons
   const feasPts=[]; for(let s=0;s<=18;s++) feasPts.push([X(s), Y(Math.min(30,feasRem(s,pace)))]);
   let dangerPoly = `M${M.l},${Y(0)} `;
@@ -132,7 +134,8 @@ function draw(){
     `<td>${p.mg||'<span class=none>—</span>'}</td><td class="step">STEP${p.step}</td><td class="rem">残${p.rem}日</td></tr>`).join('')
     || '<tr><td colspan="6" class="none">該当なし</td></tr>';
   document.getElementById('cnt').textContent =
-    `表示 ${rows.length}名 ／ 🔴対策相談 ${dangers.length}名（${rows.length?Math.round(dangers.length/rows.length*100):0}%）`;
+    `表示 ${rows.length}名 ／ 🔴対策相談 ${dangers.length}名（${rows.length?Math.round(dangers.length/rows.length*100):0}%）`
+    + (hide0 ? ` ／ 未着手STEP0 ${nStep0}名を非表示（別途フォロー対象）` : '');
 }
 function attachHover(){
   const tt=document.getElementById('tt');

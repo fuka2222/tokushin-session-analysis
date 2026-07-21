@@ -152,6 +152,7 @@ def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str) -> str:
 </style>
 </head>
 <body>
+<nav style="background:#2c3e50;padding:8px 20px;font-size:13px"><a href="./" style="color:#fff;text-decoration:none;margin-right:16px">📊 統合タイムライン</a><a href="./risk.html" style="color:#f1c40f;text-decoration:none;font-weight:700">⚠️ 危険度スキャッター（このページ）</a></nav>
 <header>
   <h1>残日数 × SP進捗　危険度スキャッター（いつまでにどのSTEPか）</h1>
   <p>基準日 {as_of.isoformat()} ／ 見込みライン=30日以内STEP18達成者{n_ach}名の中央値ペース ／ データ: {html.escape(csv_name)}</p>
@@ -174,7 +175,7 @@ def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str) -> str:
     <label><input type="radio" name="p" value="2" checked onchange="draw()">2</label>
     <label><input type="radio" name="p" value="3" onchange="draw()">3</label>
   </fieldset>
-  <label><input type="checkbox" id="hide0" onchange="draw()">未着手(STEP0)を隠す</label>
+  <label><input type="checkbox" id="hide0" checked onchange="draw()">未着手(STEP0)を隠す</label>
   <span class="cnt" id="cnt"></span>
 </div>
 <div class="wrap">
@@ -200,7 +201,9 @@ function feasRem(step, pace){{ return (18-step)/pace; }}
 function draw(){{
   const course=val('c'), pace=parseFloat(val('p')), hide0=document.getElementById('hide0').checked;
   const svg=document.getElementById('chart');
-  let rows = DATA.prog.filter(p => (course==='all'||p.course===course) && !(hide0 && p.step===0));
+  const courseSet = DATA.prog.filter(p => course==='all'||p.course===course);
+  const nStep0 = courseSet.filter(p => p.step===0).length;
+  let rows = hide0 ? courseSet.filter(p => p.step!==0) : courseSet;
   // zone polygons
   const feasPts=[]; for(let s=0;s<=18;s++) feasPts.push([X(s), Y(Math.min(30,feasRem(s,pace)))]);
   let dangerPoly = `M${{M.l}},${{Y(0)}} `;
@@ -246,7 +249,8 @@ function draw(){{
     `<td>${{p.mg||'<span class=none>—</span>'}}</td><td class="step">STEP${{p.step}}</td><td class="rem">残${{p.rem}}日</td></tr>`).join('')
     || '<tr><td colspan="6" class="none">該当なし</td></tr>';
   document.getElementById('cnt').textContent =
-    `表示 ${{rows.length}}名 ／ 🔴対策相談 ${{dangers.length}}名（${{rows.length?Math.round(dangers.length/rows.length*100):0}}%）`;
+    `表示 ${{rows.length}}名 ／ 🔴対策相談 ${{dangers.length}}名（${{rows.length?Math.round(dangers.length/rows.length*100):0}}%）`
+    + (hide0 ? ` ／ 未着手STEP0 ${{nStep0}}名を非表示（別途フォロー対象）` : '');
 }}
 function attachHover(){{
   const tt=document.getElementById('tt');
