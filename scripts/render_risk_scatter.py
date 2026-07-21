@@ -155,7 +155,7 @@ def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str) -> str:
 <nav style="background:#2c3e50;padding:8px 20px;font-size:13px"><a href="./" style="color:#fff;text-decoration:none;margin-right:16px">📊 統合タイムライン</a><a href="./risk.html" style="color:#f1c40f;text-decoration:none;font-weight:700">⚠️ 危険度スキャッター（このページ）</a></nav>
 <header>
   <h1>残日数 × SP進捗　危険度スキャッター（いつまでにどのSTEPか）</h1>
-  <p>基準日 {as_of.isoformat()} ／ 見込みライン=30日以内STEP18達成者{n_ach}名の中央値ペース ／ データ: {html.escape(csv_name)}</p>
+  <p>残日数 = (SP開始日+30日) − 今日({as_of.isoformat()})　／　横軸 = 現時点の完了STEP（最新CSV時点）　／　見込みライン=30日以内STEP18達成者{n_ach}名の中央値ペース　／　データ: {html.escape(csv_name)}</p>
   <div class="legend">
     <span><span class="sw" style="background:#e67e22"></span>見込みゾーン</span>
     <span><span class="sw" style="background:#e74c3c"></span>対策相談ゾーン（アラート）</span>
@@ -276,10 +276,10 @@ draw();
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", type=Path, default=DEFAULT_CSV)
-    ap.add_argument("--as-of", type=str, default="2026-07-18")
+    ap.add_argument("--as-of", type=str, default=None, help="残日数の基準日（省略時=今日）")
     ap.add_argument("--output", "-o", type=Path, default=DEFAULT_OUT)
     args = ap.parse_args()
-    as_of = date.fromisoformat(args.as_of)
+    as_of = date.fromisoformat(args.as_of) if args.as_of else date.today()
     csv_path = Path(str(args.csv)).expanduser()
     medline, prog, n_ach = load(csv_path, as_of)
     danger2 = sum(1 for p in prog if p["rem"] < (18 - p["step"]) / 2)
