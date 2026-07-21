@@ -139,29 +139,49 @@ def load(csv_path: Path, as_of: date, lite_path: Path | None = None):
 
     medline = [{"step": s, "rem": round(30 - interp_med(s), 2)} for s in range(0, 19)]
 
-    # 進行中の生徒
-    prog = []
+    # 生徒レコード（特進のみ）: STEP完了日とSP開始日を持たせ、時点計算はJSで行う
+    students = []
     for x in rows:
-        E = (as_of - x["start"]).days
-        if not (0 <= E < 30) or x["s18"]:
+        if x["tag"] != "特進":
             continue
-        prog.append(
+        students.append(
             {
                 "name": x["name"],
                 "course": x["tag"],
                 "klass": x["klass"],
                 "mg": x["mg"],
-                "step": max(x["steps"], default=0),
-                "rem": 30 - E,
-                "elapsed": E,
+                "start": x["start"].isoformat(),
+                "steps": sorted([[n, d.isoformat()] for n, d in x["steps"].items()]),
             }
         )
-    return medline, prog, len(ach)
+    starts = [s["start"] for s in students]
+    return medline, students, len(ach), (min(starts) if starts else None), (max(starts) if starts else None)
 
 
-def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str, default_course: str = "特進") -> str:
-    payload = json.dumps({"medline": medline, "prog": prog}, ensure_ascii=False)
-    ck = lambda v: " checked" if v == default_course else ""
+def best_snapshot(students, as_of: date, min_start: str) -> str:
+    """着手済(STEP>=1)で窓内の特進が最も多い日を既定基準日にする。"""
+    if not students:
+        return as_of.isoformat()
+    parsed = [(date.fromisoformat(s["start"]), [date.fromisoformat(d) for _, d in s["steps"]]) for s in students]
+    start = date.fromisoformat(min_start)
+    best, best_d = -1, as_of
+    d = start
+    while d <= as_of:
+        c = 0
+        for st, sd in parsed:
+            E = (d - st).days
+            if 0 <= E < 30 and any(x <= d for x in sd):
+                c += 1
+        if c > best:
+            best, best_d = c, d
+        d = date.fromordinal(d.toordinal() + 1)
+    return best_d.isoformat()
+
+
+def build_html(medline, students, n_ach: int, as_of: date, csv_name: str, min_start: str, max_start: str) -> str:
+    payload = json.dumps({"medline": medline, "students": students}, ensure_ascii=False)
+    today = as_of.isoformat()
+    default_snap = best_snapshot(students, as_of, min_start)
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -203,8 +223,8 @@ def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str, default_co
 <body>
 <nav style="background:#2c3e50;padding:8px 20px;font-size:13px"><a href="./" style="color:#fff;text-decoration:none;margin-right:16px">📊 統合タイムライン</a><a href="./risk.html" style="color:#f1c40f;text-decoration:none;font-weight:700">⚠️ 危険度スキャッター（このページ）</a></nav>
 <header>
-  <h1>残日数 × SP進捗　危険度スキャッター（いつまでにどのSTEPか）</h1>
-  <p>残日数 = (SP開始日+30日) − 今日({as_of.isoformat()})　／　横軸 = 現時点の完了STEP（最新CSV時点）　／　見込みライン=30日以内STEP18達成者{n_ach}名の中央値ペース　／　データ: {html.escape(csv_name)}</p>
+  <h1>残日数 × SP進捗　危険度スキャッター（特進コース）</h1>
+  <p>残日数 = (SP開始日+30日) − <b>基準日</b>　／　横軸 = <b>基準日時点</b>の完了STEP　／　見込みライン=STEP18達成者{n_ach}名の中央値ペース　／　データ: {html.escape(csv_name)}（新+lite統合）</p>
   <div class="legend">
     <span><span class="sw" style="background:#e67e22"></span>見込みゾーン</span>
     <span><span class="sw" style="background:#e74c3c"></span>対策相談ゾーン（アラート）</span>
@@ -213,10 +233,13 @@ def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str, default_co
   </div>
 </header>
 <div class="controls">
-  <fieldset><legend>コース</legend>
-    <label><input type="radio" name="c" value="all"{ck('all')} onchange="draw()">すべて</label>
-    <label><input type="radio" name="c" value="特進"{ck('特進')} onchange="draw()">特進</label>
-    <label><input type="radio" name="c" value="基本"{ck('基本')} onchange="draw()">基本</label>
+  <fieldset><legend>基準日（過去の時点も見られる）</legend>
+    <button type="button" onclick="shiftDay(-7)">◀7日</button>
+    <button type="button" onclick="shiftDay(-1)">◀1日</button>
+    <input type="date" id="snapd" min="{min_start}" max="{today}" value="{default_snap}" onchange="draw()">
+    <button type="button" onclick="shiftDay(1)">1日▶</button>
+    <button type="button" onclick="shiftDay(7)">7日▶</button>
+    <button type="button" onclick="document.getElementById('snapd').value='{today}';draw()">今日</button>
   </fieldset>
   <fieldset><legend>到達可能性ペース（1日あたりSTEP）</legend>
     <label><input type="radio" name="p" value="1" onchange="draw()">1</label>
@@ -244,15 +267,42 @@ const M = {{t:24,r:20,b:44,l:44}}, W=900, H=560;
 const iw=W-M.l-M.r, ih=H-M.t-M.b;
 const X = s => M.l + s/18*iw;
 const Y = r => M.t + (30-r)/30*ih;
+const DAY = 86400000;
 function val(n){{return document.querySelector('input[name="'+n+'"]:checked').value;}}
 function feasRem(step, pace){{ return (18-step)/pace; }}
+function shiftDay(n){{
+  const el=document.getElementById('snapd'); const d=new Date(el.value+'T00:00:00');
+  d.setDate(d.getDate()+n);
+  const iso=d.toISOString().slice(0,10);
+  if(iso>=el.min && iso<=el.max) el.value=iso;
+  draw();
+}}
+// 基準日時点の各生徒の状態（残日数・現STEP）を計算。窓外(0-30日外)や達成済みは除外。
+function snapshotRows(snapISO){{
+  const snap=new Date(snapISO+'T00:00:00');
+  const out=[]; let step0=0, achieved=0;
+  DATA.students.forEach(s=>{{
+    const start=new Date(s.start+'T00:00:00');
+    const E=Math.floor((snap-start)/DAY);
+    if(E<0 || E>=30) return;                 // その時点で30日窓の外
+    let cur=0, done=false;
+    s.steps.forEach(([n,iso])=>{{ const d=new Date(iso+'T00:00:00');
+      if(d<=snap){{ if(n>cur) cur=n; if(n>=18) done=true; }} }});
+    if(done){{ achieved++; return; }}          // その時点で既に初投稿(STEP18)達成
+    out.push({{name:s.name, course:s.course, klass:s.klass, mg:s.mg, step:cur, rem:30-E}});
+  }});
+  out._step0 = out.filter(p=>p.step===0).length;
+  out._achieved = achieved;
+  return out;
+}}
 
 function draw(){{
-  const course=val('c'), pace=parseFloat(val('p')), hide0=document.getElementById('hide0').checked;
+  const pace=parseFloat(val('p')), hide0=document.getElementById('hide0').checked;
+  const snapISO=document.getElementById('snapd').value;
   const svg=document.getElementById('chart');
-  const courseSet = DATA.prog.filter(p => course==='all'||p.course===course);
-  const nStep0 = courseSet.filter(p => p.step===0).length;
-  let rows = hide0 ? courseSet.filter(p => p.step!==0) : courseSet;
+  const all = snapshotRows(snapISO);
+  const nStep0 = all._step0;
+  let rows = hide0 ? all.filter(p => p.step!==0) : all;
   // zone polygons
   const feasPts=[]; for(let s=0;s<=18;s++) feasPts.push([X(s), Y(Math.min(30,feasRem(s,pace)))]);
   let dangerPoly = `M${{M.l}},${{Y(0)}} `;
@@ -298,8 +348,9 @@ function draw(){{
     `<td>${{p.mg||'<span class=none>—</span>'}}</td><td class="step">STEP${{p.step}}</td><td class="rem">残${{p.rem}}日</td></tr>`).join('')
     || '<tr><td colspan="6" class="none">該当なし</td></tr>';
   document.getElementById('cnt').textContent =
-    `表示 ${{rows.length}}名 ／ 🔴対策相談 ${{dangers.length}}名（${{rows.length?Math.round(dangers.length/rows.length*100):0}}%）`
-    + (hide0 ? ` ／ 未着手STEP0 ${{nStep0}}名を非表示（別途フォロー対象）` : '');
+    `基準日 ${{snapISO}}｜窓内 ${{all.length}}名 表示 ${{rows.length}}名 ／ 🔴対策相談 ${{dangers.length}}名`
+    + (hide0 ? ` ／ 未着手STEP0 ${{nStep0}}名を非表示` : '')
+    + `（＋この時点で達成済 ${{all._achieved}}名）`;
 }}
 function attachHover(){{
   const tt=document.getElementById('tt');
@@ -333,10 +384,9 @@ def main() -> int:
     as_of = date.fromisoformat(args.as_of) if args.as_of else date.today()
     csv_path = Path(str(args.csv)).expanduser()
     lite_path = Path(str(args.lite_csv)).expanduser()
-    medline, prog, n_ach = load(csv_path, as_of, lite_path)
-    tok = [p for p in prog if p["course"] == "特進"]
-    print(f"進行中(全) {len(prog)}名 / 特進 {len(tok)}名 / 特進の着手済 {sum(1 for p in tok if p['step']>=1)}名 / 達成者 {n_ach}名")
-    out = build_html(medline, prog, n_ach, as_of, csv_path.name, default_course=args.course)
+    medline, students, n_ach, min_start, max_start = load(csv_path, as_of, lite_path)
+    print(f"特進 生徒 {len(students)}名（STEP完了日付き）/ 達成者(見込み基準) {n_ach}名 / SP開始 {min_start}〜{max_start}")
+    out = build_html(medline, students, n_ach, as_of, csv_path.name, min_start or "2026-05-01", max_start or as_of.isoformat())
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(out, encoding="utf-8")
     print(f"Wrote {args.output}")
