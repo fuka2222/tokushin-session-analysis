@@ -17,12 +17,14 @@ import collections
 import csv
 import html
 import json
+import re
 import statistics
 from datetime import date, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CSV = Path.home() / "Downloads" / "Lステップの顧客データ - 投稿プログラム（新） (1).csv"
+DEFAULT_LITE_CSV = Path.home() / "Downloads" / "Lステップの顧客データ - 投稿プログラム（2026年6月〜）.csv"
 DEFAULT_OUT = ROOT / "data/reports/risk_scatter.html"
 
 
@@ -34,31 +36,77 @@ def _pd(s: str) -> date | None:
         return None
 
 
-def load(csv_path: Path, as_of: date):
-    raw = list(csv.reader(csv_path.open(encoding="utf-8")))
+def _norm(s: str) -> str:
+    return re.sub(r"[（(].*?[）)]", "", s.strip().replace("　", "").replace(" ", "")).lower()
+
+
+def _parse_program_csv(path: Path) -> dict:
+    """投稿プログラム（新 or 2026年6月〜lite）を読み、表示名→{start, steps:{大STEP:date}} を返す。
+    新: 列 STEP{n}完了日 → 大STEP=n。lite: 列 STEP{x}-{y}完了日 → 大STEP=x（サブの最遅日で完了）。"""
+    if not path.exists():
+        return {}
+    raw = list(csv.reader(path.open(encoding="utf-8")))
     hdr = raw[0]
     si = {h: i for i, h in enumerate(hdr)}
-    idxc = [i for i, h in enumerate(hdr) if h == "コース"][0]
-    stepcols = [(n, si[f"STEP{n}完了日"]) for n in range(1, 20)]
-    rows = []
+    start_col = si.get("投稿プログラム開始日", si.get("プログラム開始日"))
+    course_i = next((i for i, h in enumerate(hdr) if h == "コース"), None)
+    # 大STEP -> [列index]
+    bigcols: dict[int, list[int]] = collections.defaultdict(list)
+    for i, h in enumerate(hdr):
+        m = re.match(r"STEP(\d+)(?:-(\d+))?完了日", h)
+        if m:
+            bigcols[int(m.group(1))].append(i)
+    out: dict[str, dict] = {}
     for r in raw[1:]:
-        course = (r[idxc] or "").replace("講座_", "").strip()
+        name = (r[si["表示名"]] if "表示名" in si else "").replace("　", " ").strip()
+        if not name:
+            continue
+        start = _pd(r[start_col]) if start_col is not None else None
+        steps: dict[int, date] = {}
+        for big, cols in bigcols.items():
+            ds = [_pd(r[c]) for c in cols]
+            ds = [d for d in ds if d]
+            if ds:
+                steps[big] = max(ds)  # その大STEPを完了した日
+        rec = {
+            "name": name,
+            "course": (r[course_i] or "").replace("講座_", "").strip() if course_i is not None else "",
+            "klass": (r[si["クラス名(講師名)"]] or "").strip() if "クラス名(講師名)" in si else "",
+            "mg": (r[si["担当MG名"]] or "").strip() if "担当MG名" in si else "",
+            "start": start,
+            "steps": steps,
+        }
+        out[_norm(name)] = rec
+    return out
+
+
+def load(csv_path: Path, as_of: date, lite_path: Path | None = None):
+    new_idx = _parse_program_csv(csv_path)
+    lite_idx = _parse_program_csv(lite_path) if lite_path else {}
+    # マージ: 同名は「進捗(大STEP最大)が大きい方 / start がある方」を採用
+    keys = set(new_idx) | set(lite_idx)
+    rows = []
+    for k in keys:
+        a, b = new_idx.get(k), lite_idx.get(k)
+        cands = [c for c in (a, b) if c and c["start"]]
+        if not cands:
+            continue
+        rec = max(cands, key=lambda c: (max(c["steps"], default=0), len(c["steps"])))
+        course = rec["course"] or (a or b or {}).get("course", "")
         tag = "特進" if "特進" in course else ("基本" if "ベーシック" in course else None)
         if not tag:
             continue
-        start = _pd(r[si["投稿プログラム開始日"]])
-        if not start:
-            continue
-        steps = {n: d for n, d in ((n, _pd(r[c])) for n, c in stepcols) if d}
+        start = rec["start"]
+        steps = {n: d for n, d in rec["steps"].items()}
         rows.append(
             {
                 "tag": tag,
                 "start": start,
                 "steps": steps,
                 "s18": steps.get(18),
-                "name": r[si["表示名"]].replace("　", " ").strip(),
-                "klass": (r[si["クラス名(講師名)"]] or "").strip(),
-                "mg": (r[si["担当MG名"]] or "").strip(),
+                "name": rec["name"],
+                "klass": rec["klass"],
+                "mg": rec["mg"],
             }
         )
 
@@ -111,8 +159,9 @@ def load(csv_path: Path, as_of: date):
     return medline, prog, len(ach)
 
 
-def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str) -> str:
+def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str, default_course: str = "特進") -> str:
     payload = json.dumps({"medline": medline, "prog": prog}, ensure_ascii=False)
+    ck = lambda v: " checked" if v == default_course else ""
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -165,9 +214,9 @@ def build_html(medline, prog, n_ach: int, as_of: date, csv_name: str) -> str:
 </header>
 <div class="controls">
   <fieldset><legend>コース</legend>
-    <label><input type="radio" name="c" value="all" checked onchange="draw()">すべて</label>
-    <label><input type="radio" name="c" value="特進" onchange="draw()">特進</label>
-    <label><input type="radio" name="c" value="基本" onchange="draw()">基本</label>
+    <label><input type="radio" name="c" value="all"{ck('all')} onchange="draw()">すべて</label>
+    <label><input type="radio" name="c" value="特進"{ck('特進')} onchange="draw()">特進</label>
+    <label><input type="radio" name="c" value="基本"{ck('基本')} onchange="draw()">基本</label>
   </fieldset>
   <fieldset><legend>到達可能性ペース（1日あたりSTEP）</legend>
     <label><input type="radio" name="p" value="1" onchange="draw()">1</label>
@@ -276,15 +325,18 @@ draw();
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", type=Path, default=DEFAULT_CSV)
+    ap.add_argument("--lite-csv", type=Path, default=DEFAULT_LITE_CSV)
     ap.add_argument("--as-of", type=str, default=None, help="残日数の基準日（省略時=今日）")
+    ap.add_argument("--course", type=str, default="特進", help="既定表示コース（特進/基本/all）")
     ap.add_argument("--output", "-o", type=Path, default=DEFAULT_OUT)
     args = ap.parse_args()
     as_of = date.fromisoformat(args.as_of) if args.as_of else date.today()
     csv_path = Path(str(args.csv)).expanduser()
-    medline, prog, n_ach = load(csv_path, as_of)
-    danger2 = sum(1 for p in prog if p["rem"] < (18 - p["step"]) / 2)
-    print(f"進行中 {len(prog)}名 / 達成者(見込み基準) {n_ach}名 / 既定pace2で対策相談 {danger2}名")
-    out = build_html(medline, prog, n_ach, as_of, csv_path.name)
+    lite_path = Path(str(args.lite_csv)).expanduser()
+    medline, prog, n_ach = load(csv_path, as_of, lite_path)
+    tok = [p for p in prog if p["course"] == "特進"]
+    print(f"進行中(全) {len(prog)}名 / 特進 {len(tok)}名 / 特進の着手済 {sum(1 for p in tok if p['step']>=1)}名 / 達成者 {n_ach}名")
+    out = build_html(medline, prog, n_ach, as_of, csv_path.name, default_course=args.course)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(out, encoding="utf-8")
     print(f"Wrote {args.output}")
