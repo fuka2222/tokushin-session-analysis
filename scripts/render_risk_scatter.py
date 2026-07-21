@@ -25,7 +25,31 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_CSV = Path.home() / "Downloads" / "Lステップの顧客データ - 投稿プログラム（新） (1).csv"
 DEFAULT_LITE_CSV = Path.home() / "Downloads" / "Lステップの顧客データ - 投稿プログラム（2026年6月〜）.csv"
+DEFAULT_COMMIT_XLSX = Path.home() / "Downloads" / "コミットプラン 2026年6月3日集計.xlsx"
 DEFAULT_OUT = ROOT / "data/reports/risk_scatter.html"
+
+
+def load_session_index(path: Path) -> dict:
+    """コミットプラン「セッション実施状況管理」→ 表示名(norm) → (自己分析0/1, 伴走回数)。"""
+    if not path.exists():
+        return {}
+    import pandas as pd  # noqa
+    from analyze_commit_plan_cohort import SELF_ANALYSIS_COL, COACHING_COLS  # noqa
+
+    df = pd.read_excel(path, sheet_name="セッション実施状況管理", header=None)
+    idx: dict[str, tuple[int, int]] = {}
+    for i in range(10, len(df)):
+        nm = df.iloc[i, 7]
+        if pd.isna(nm):
+            continue
+        nm = str(nm).strip()
+        if not nm or "テスト" in nm or nm.startswith("以下"):
+            continue
+        sa = df.iloc[i, SELF_ANALYSIS_COL]
+        n_sa = 1 if (pd.notna(sa) and not isinstance(sa, str)) else 0
+        n_co = sum(1 for c in COACHING_COLS if pd.notna(df.iloc[i, c]) and not isinstance(df.iloc[i, c], str))
+        idx[_norm(nm)] = (n_sa, n_co)
+    return idx
 
 
 def _pd(s: str) -> date | None:
@@ -80,9 +104,10 @@ def _parse_program_csv(path: Path) -> dict:
     return out
 
 
-def load(csv_path: Path, as_of: date, lite_path: Path | None = None):
+def load(csv_path: Path, as_of: date, lite_path: Path | None = None, commit_path: Path | None = None):
     new_idx = _parse_program_csv(csv_path)
     lite_idx = _parse_program_csv(lite_path) if lite_path else {}
+    sess_idx = load_session_index(commit_path) if commit_path else {}
     # マージ: 同名は「進捗(大STEP最大)が大きい方 / start がある方」を採用
     keys = set(new_idx) | set(lite_idx)
     rows = []
@@ -144,6 +169,7 @@ def load(csv_path: Path, as_of: date, lite_path: Path | None = None):
     for x in rows:
         if x["tag"] != "特進":
             continue
+        sa_co = sess_idx.get(_norm(x["name"]))
         students.append(
             {
                 "name": x["name"],
@@ -152,6 +178,8 @@ def load(csv_path: Path, as_of: date, lite_path: Path | None = None):
                 "mg": x["mg"],
                 "start": x["start"].isoformat(),
                 "steps": sorted([[n, d.isoformat()] for n, d in x["steps"].items()]),
+                "sa": (sa_co[0] if sa_co else None),
+                "co": (sa_co[1] if sa_co else None),
             }
         )
     starts = [s["start"] for s in students]
@@ -226,10 +254,11 @@ def build_html(medline, students, n_ach: int, as_of: date, csv_name: str, min_st
   <h1>残日数 × SP進捗　危険度スキャッター（特進コース）</h1>
   <p>残日数 = (SP開始日+30日) − <b>基準日</b>　／　横軸 = <b>基準日時点</b>の完了STEP　／　見込みライン=STEP18達成者{n_ach}名の中央値ペース　／　データ: {html.escape(csv_name)}（新+lite統合）</p>
   <div class="legend">
-    <span><span class="sw" style="background:#e67e22"></span>見込みゾーン</span>
-    <span><span class="sw" style="background:#e74c3c"></span>対策相談ゾーン（アラート）</span>
-    <span><span class="sw" style="background:#e67e22;border-radius:2px;width:20px;height:0;border-top:2px dashed #e67e22"></span>見込みライン（達成者中央値＝理想ペース）</span>
-    <span><span class="sw" style="background:#e74c3c;border-radius:2px;width:20px;height:3px"></span>対策相談ライン（到達可能性）</span>
+    <span><span class="sw" style="background:#27ae60"></span>見込み（あるべきSTEP以上）</span>
+    <span><span class="sw" style="background:#f39c12"></span>要注意（遅れ・まだ間に合う）</span>
+    <span><span class="sw" style="background:#e74c3c"></span>対策相談（間に合わない見込み）</span>
+    <span><span class="sw" style="background:#27ae60;border-radius:2px;width:20px;height:3px"></span>見込みライン（達成者中央値）</span>
+    <span><span class="sw" style="background:#e74c3c;border-radius:2px;width:20px;height:3px"></span>到達可能ライン</span>
   </div>
 </header>
 <div class="controls">
@@ -252,11 +281,11 @@ def build_html(medline, students, n_ach: int, as_of: date, csv_name: str, min_st
 </div>
 <div class="wrap">
   <div class="card"><svg id="chart" viewBox="0 0 900 560" role="img" aria-label="残日数×SP進捗スキャッター"></svg>
-    <p class="note">縦=残日数（30−SP開始からの経過日数）、横=現在の完了STEP。点が<b>対策相談ライン</b>より下＝残り日数で残りSTEPを終えられない見込み。同座標の点は横に少しずらして表示。</p>
+    <p class="note">🟢<b>見込み</b>=見込みライン(達成者中央値)以上／🟡<b>要注意</b>=見込みラインは下回るがまだ間に合う／🔴<b>対策相談</b>=到達可能ラインも下回り、残り日数で間に合わない見込み。同座標の点は横に少しずらして表示。</p>
   </div>
   <div class="card alerts">
-    <h2>🔴 対策相談ゾーンの生徒（残日数の少ない順）</h2>
-    <table><thead><tr><th>生徒名</th><th>コース</th><th>所属クラス</th><th>担当MG名</th><th>現STEP</th><th>残日数</th></tr></thead>
+    <h2>🔴 対策相談・🟡 要注意の生徒（見込みラインを下回る人）</h2>
+    <table><thead><tr><th>判定</th><th>生徒名</th><th>所属クラス</th><th>担当MG名</th><th>現STEP</th><th>残日数</th><th>セッション</th></tr></thead>
     <tbody id="alertbody"></tbody></table>
   </div>
 </div>
@@ -289,7 +318,7 @@ function snapshotRows(snapISO){{
     s.steps.forEach(([n,iso])=>{{ const d=new Date(iso+'T00:00:00');
       if(d<=snap){{ if(n>cur) cur=n; if(n>=18) done=true; }} }});
     if(done){{ achieved++; return; }}          // その時点で既に初投稿(STEP18)達成
-    out.push({{name:s.name, course:s.course, klass:s.klass, mg:s.mg, step:cur, rem:30-E}});
+    out.push({{name:s.name, course:s.course, klass:s.klass, mg:s.mg, step:cur, rem:30-E, sa:s.sa, co:s.co}});
   }});
   out._step0 = out.filter(p=>p.step===0).length;
   out._achieved = achieved;
@@ -303,52 +332,68 @@ function draw(){{
   const all = snapshotRows(snapISO);
   const nStep0 = all._step0;
   let rows = hide0 ? all.filter(p => p.step!==0) : all;
-  // zone polygons
-  const feasPts=[]; for(let s=0;s<=18;s++) feasPts.push([X(s), Y(Math.min(30,feasRem(s,pace)))]);
-  let dangerPoly = `M${{M.l}},${{Y(0)}} `;
-  for(let s=0;s<=18;s++) dangerPoly += `L${{X(s)}},${{Y(Math.min(30,feasRem(s,pace)))}} `;
-  dangerPoly += `L${{X(18)}},${{Y(0)}} Z`;
+  // 2本のライン: 見込み(中央値) med(s) と 到達可能 feas(s)
+  const med = s => DATA.medline[s].rem;                 // 見込みライン残日数
+  const feas = s => Math.min(30, feasRem(s, pace));     // 到達可能ライン残日数
+  // 3ゾーンの帯（下から: 赤=対策相談 / 黄=要注意 / 緑=見込み）
+  function band(lower, upper){{
+    let d = `M${{X(0)}},${{Y(lower(0))}}`;
+    for(let s=1;s<=18;s++) d += ` L${{X(s)}},${{Y(lower(s))}}`;
+    for(let s=18;s>=0;s--) d += ` L${{X(s)}},${{Y(upper(s))}}`;
+    return d + ' Z';
+  }}
+  const redBand = band(()=>0, feas);
+  const yellowBand = band(feas, med);
+  const greenBand = band(med, ()=>30);
   const medPoly = DATA.medline.map((d,i)=>`${{i?'L':'M'}}${{X(d.step)}},${{Y(d.rem)}}`).join(' ');
-  const feasLine = feasPts.map((p,i)=>`${{i?'L':'M'}}${{p[0]}},${{p[1]}}`).join(' ');
+  const feasLine = [...Array(19).keys()].map((s,i)=>`${{i?'L':'M'}}${{X(s)}},${{Y(feas(s))}}`).join(' ');
   // grid + ticks
   let g='';
   for(let r=0;r<=30;r+=2){{ const y=Y(r); g+=`<line x1="${{M.l}}" y1="${{y}}" x2="${{W-M.r}}" y2="${{y}}" stroke="#eee"/>`+
     `<text x="${{M.l-6}}" y="${{y+3}}" text-anchor="end" font-size="9" fill="#999">${{r}}</text>`; }}
   for(let s=0;s<=18;s++){{ const x=X(s); g+=`<line x1="${{x}}" y1="${{M.t}}" x2="${{x}}" y2="${{H-M.b}}" stroke="#f1f1f1"/>`+
     `<text x="${{x}}" y="${{H-M.b+14}}" text-anchor="middle" font-size="9" fill="#999">${{s}}</text>`; }}
-  // points with jitter for same coord
-  const seen={{}}; let pts=''; const dangers=[];
+  // zone分類
+  function zoneOf(p){{ if(p.rem < feas(p.step)) return 'red'; if(p.rem < med(p.step)) return 'yellow'; return 'green'; }}
+  const COL = {{red:'#e74c3c', yellow:'#f39c12', green:'#27ae60'}};
+  const seen={{}}; let pts=''; const behind=[]; const cnt={{red:0,yellow:0,green:0}};
   rows.forEach(p=>{{
+    const z=zoneOf(p); cnt[z]++;
     const key=p.step+'_'+p.rem; const k=(seen[key]=(seen[key]||0)+1);
-    const off=((k-1)%6)*6 - 15; // 横ジッタ
-    const danger = p.rem < feasRem(p.step, pace);
+    const off=((k-1)%6)*6 - 15;
     const cx=X(p.step)+off, cy=Y(p.rem);
-    const col = danger? '#e74c3c':'#e67e22';
-    pts += `<circle class="pt" cx="${{cx}}" cy="${{cy}}" r="5" fill="${{col}}" fill-opacity="0.85" stroke="#fff" stroke-width="1"`+
+    const sess=(p.sa==null)?'':(p.sa+p.co);
+    pts += `<circle class="pt" cx="${{cx}}" cy="${{cy}}" r="5" fill="${{COL[z]}}" fill-opacity="0.85" stroke="#fff" stroke-width="1"`+
            ` data-n="${{encodeURIComponent(p.name)}}" data-c="${{p.course}}" data-k="${{encodeURIComponent(p.klass)}}"`+
-           ` data-m="${{encodeURIComponent(p.mg)}}" data-s="${{p.step}}" data-r="${{p.rem}}"/>`;
-    if(danger){{ dangers.push(p);
-      if(k<=1) pts += `<text class="ptlabel" x="${{cx}}" y="${{cy-7}}" text-anchor="middle">${{p.name}}</text>`; }}
+           ` data-m="${{encodeURIComponent(p.mg)}}" data-s="${{p.step}}" data-r="${{p.rem}}" data-sa="${{p.sa==null?'':p.sa}}" data-co="${{p.co==null?'':p.co}}"/>`;
+    if(z!=='green'){{ p._z=z; behind.push(p);
+      if(k<=1) pts += `<text class="ptlabel" x="${{cx}}" y="${{cy-7}}" text-anchor="middle" fill="${{COL[z]}}">${{p.name}}</text>`; }}
   }});
-  const zoneLabels = `<text x="${{W-M.r-14}}" y="${{M.t+30}}" text-anchor="end" font-size="20" font-weight="800" fill="#e67e22" opacity="0.5">見込みゾーン</text>`+
-    `<text x="${{M.l+14}}" y="${{H-M.b-16}}" font-size="20" font-weight="800" fill="#e74c3c" opacity="0.6">対策相談ゾーン</text>`;
+  const zoneLabels = `<text x="${{W-M.r-14}}" y="${{M.t+26}}" text-anchor="end" font-size="18" font-weight="800" fill="#27ae60" opacity="0.5">見込み</text>`+
+    `<text x="${{M.l+iw/2}}" y="${{M.t+ih*0.5}}" text-anchor="middle" font-size="16" font-weight="800" fill="#e69510" opacity="0.45">要注意</text>`+
+    `<text x="${{M.l+14}}" y="${{H-M.b-14}}" font-size="18" font-weight="800" fill="#e74c3c" opacity="0.6">対策相談</text>`;
   svg.innerHTML = g +
-    `<path d="${{dangerPoly}}" fill="#e74c3c" fill-opacity="0.07"/>`+
-    `<path d="${{medPoly}}" fill="none" stroke="#e67e22" stroke-width="2" stroke-dasharray="5 4"/>`+
+    `<path d="${{redBand}}" fill="#e74c3c" fill-opacity="0.08"/>`+
+    `<path d="${{yellowBand}}" fill="#f39c12" fill-opacity="0.10"/>`+
+    `<path d="${{greenBand}}" fill="#27ae60" fill-opacity="0.06"/>`+
+    `<path d="${{medPoly}}" fill="none" stroke="#27ae60" stroke-width="2.5"/>`+
     `<path d="${{feasLine}}" fill="none" stroke="#e74c3c" stroke-width="2.5"/>`+
-    `<rect x="${{M.l}}" y="${{M.t}}" width="${{iw}}" height="${{ih}}" fill="none" stroke="#e67e22"/>`+
+    `<rect x="${{M.l}}" y="${{M.t}}" width="${{iw}}" height="${{ih}}" fill="none" stroke="#ccc"/>`+
     zoneLabels + pts +
     `<text x="${{M.l+iw/2}}" y="${{H-6}}" text-anchor="middle" font-size="11" fill="#666">SP進捗（完了STEP）</text>`+
     `<text transform="translate(12,${{M.t+ih/2}}) rotate(-90)" text-anchor="middle" font-size="11" fill="#666">残日数</text>`;
   attachHover();
-  // alerts
-  dangers.sort((a,b)=>a.rem-b.rem);
-  document.getElementById('alertbody').innerHTML = dangers.map(p=>
-    `<tr><td>${{p.name}}</td><td>${{p.course}}</td><td>${{p.klass||'<span class=none>—</span>'}}</td>`+
-    `<td>${{p.mg||'<span class=none>—</span>'}}</td><td class="step">STEP${{p.step}}</td><td class="rem">残${{p.rem}}日</td></tr>`).join('')
-    || '<tr><td colspan="6" class="none">該当なし</td></tr>';
+  // alert list: 対策相談(赤)→要注意(黄) の順、残日数少ない順
+  behind.sort((a,b)=>(a._z===b._z ? a.rem-b.rem : (a._z==='red'?-1:1)));
+  const sessTxt=p=>(p.sa==null)?'<span class=none>—</span>':`${{p.sa+p.co}}回`;
+  const badge=z=>z==='red'?'<span style="color:#e74c3c;font-weight:700">🔴対策相談</span>':'<span style="color:#c07b0d;font-weight:700">🟡要注意</span>';
+  document.getElementById('alertbody').innerHTML = behind.map(p=>
+    `<tr><td>${{badge(p._z)}}</td><td>${{p.name}}</td><td>${{p.klass||'<span class=none>—</span>'}}</td>`+
+    `<td>${{p.mg||'<span class=none>—</span>'}}</td><td class="step">STEP${{p.step}}</td><td class="rem">残${{p.rem}}日</td>`+
+    `<td class="step">${{sessTxt(p)}}</td></tr>`).join('')
+    || '<tr><td colspan="7" class="none">該当なし</td></tr>';
   document.getElementById('cnt').textContent =
-    `基準日 ${{snapISO}}｜窓内 ${{all.length}}名 表示 ${{rows.length}}名 ／ 🔴対策相談 ${{dangers.length}}名`
+    `基準日 ${{snapISO}}｜窓内 ${{all.length}}名 表示 ${{rows.length}}名 ／ 🟢見込み ${{cnt.green}}／🟡要注意 ${{cnt.yellow}}／🔴対策相談 ${{cnt.red}}`
     + (hide0 ? ` ／ 未着手STEP0 ${{nStep0}}名を非表示` : '')
     + `（＋この時点で達成済 ${{all._achieved}}名）`;
 }}
@@ -357,10 +402,13 @@ function attachHover(){{
   document.querySelectorAll('.pt').forEach(c=>{{
     c.addEventListener('mouseenter',e=>{{
       const d=c.dataset;
+      const sess = d.sa==='' ? 'セッション記録なし'
+        : `セッション ${{Number(d.sa)+Number(d.co)}}回（自己分析${{d.sa}}・伴走${{d.co}}）`;
       tt.innerHTML=`<div class="nm">${{decodeURIComponent(d.n)}}</div>`+
         `<div>${{d.c}} / ${{decodeURIComponent(d.k)||'—'}}</div>`+
         `<div>担当MG: ${{decodeURIComponent(d.m)||'—'}}</div>`+
-        `<div>現STEP${{d.s}} ・ 残${{d.r}}日</div>`;
+        `<div>現STEP${{d.s}} ・ 残${{d.r}}日</div>`+
+        `<div>${{sess}}</div>`;
       tt.style.opacity=1;
     }});
     c.addEventListener('mousemove',e=>{{ tt.style.left=(e.clientX+14)+'px'; tt.style.top=(e.clientY+14)+'px'; }});
@@ -377,6 +425,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", type=Path, default=DEFAULT_CSV)
     ap.add_argument("--lite-csv", type=Path, default=DEFAULT_LITE_CSV)
+    ap.add_argument("--commit-xlsx", type=Path, default=DEFAULT_COMMIT_XLSX)
     ap.add_argument("--as-of", type=str, default=None, help="残日数の基準日（省略時=今日）")
     ap.add_argument("--course", type=str, default="特進", help="既定表示コース（特進/基本/all）")
     ap.add_argument("--output", "-o", type=Path, default=DEFAULT_OUT)
@@ -384,8 +433,10 @@ def main() -> int:
     as_of = date.fromisoformat(args.as_of) if args.as_of else date.today()
     csv_path = Path(str(args.csv)).expanduser()
     lite_path = Path(str(args.lite_csv)).expanduser()
-    medline, students, n_ach, min_start, max_start = load(csv_path, as_of, lite_path)
-    print(f"特進 生徒 {len(students)}名（STEP完了日付き）/ 達成者(見込み基準) {n_ach}名 / SP開始 {min_start}〜{max_start}")
+    commit_path = Path(str(args.commit_xlsx)).expanduser()
+    medline, students, n_ach, min_start, max_start = load(csv_path, as_of, lite_path, commit_path)
+    n_sess = sum(1 for s in students if s.get("sa") is not None)
+    print(f"特進 生徒 {len(students)}名 / セッション記録あり {n_sess}名 / 達成者 {n_ach}名 / SP開始 {min_start}〜{max_start}")
     out = build_html(medline, students, n_ach, as_of, csv_path.name, min_start or "2026-05-01", max_start or as_of.isoformat())
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(out, encoding="utf-8")
